@@ -74,5 +74,12 @@ void Laser::DrawObject(GameSimsRenderer &r) {
 }
 
 bool Laser::UpdateObject(float dt) {
+	const float SPEED = 98.0f;
+	position.x += velocity.x * SPEED * dt;
+	position.y += velocity.y * SPEED * dt;
+
+	if (position.x ) {
+
+	}
 	return true;
 }

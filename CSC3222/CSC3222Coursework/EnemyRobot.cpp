@@ -14,6 +14,10 @@ EnemyRobot::EnemyRobot() : Robot()	{
 EnemyRobot::~EnemyRobot()	{
 }
 
+void EnableGravity(float delta) {
+
+}
+
 bool EnemyRobot::UpdateObject(float dt) {
 	thinkTime -= dt;
 
@@ -56,5 +60,8 @@ bool EnemyRobot::UpdateObject(float dt) {
 			currentAnimDir = MovementDir::Down;
 		}
 	}
+
+
+
 	return true;
 }

@@ -23,25 +23,25 @@ bool PlayerRobot::UpdateObject(float dt) {
 
 	Vector2 newVelocity;
 
-	if (Window::GetKeyboard()->KeyDown(KEYBOARD_LEFT)) {
+	if (Window::GetKeyboard()->KeyDown(KEYBOARD_A)) {
 		currentAnimDir = MovementDir::Left;
 		UpdateAnimFrame(dt);
 
 		newVelocity.x = -testSpeed * dt;
 	}
-	if (Window::GetKeyboard()->KeyDown(KEYBOARD_RIGHT)) {
+	if (Window::GetKeyboard()->KeyDown(KEYBOARD_D)) {
 		currentAnimDir = MovementDir::Right;
 		UpdateAnimFrame(dt);
 
 		newVelocity.x = testSpeed * dt;
 	}
-	if (Window::GetKeyboard()->KeyDown(KEYBOARD_UP)) {
+	if (Window::GetKeyboard()->KeyDown(KEYBOARD_W)) {
 		currentAnimDir = MovementDir::Up;
 		UpdateAnimFrame(dt);
 
 		newVelocity.y = -testSpeed * dt;
 	}
-	if (Window::GetKeyboard()->KeyDown(KEYBOARD_DOWN)) {
+	if (Window::GetKeyboard()->KeyDown(KEYBOARD_S)) {
 		currentAnimDir = MovementDir::Down;
 		UpdateAnimFrame(dt);
 
@@ -52,7 +52,15 @@ bool PlayerRobot::UpdateObject(float dt) {
 
 	if (Window::GetKeyboard()->KeyPressed(KEYBOARD_SPACE)) {
 		Vector2 laserSpeed = newVelocity * 150.0f;
-		Laser* shot = new Laser(laserSpeed);
+		Laser* shot = new Laser(*(new Vector2(
+		currentAnimDir == MovementDir::Left
+			? -1 :
+		currentAnimDir == MovementDir::Right
+			? 1 : 0,
+		currentAnimDir == MovementDir::Up
+			? -1 :
+		currentAnimDir == MovementDir::Down
+			? 1 : 0)));
 		shot->SetPosition(position + Vector2(8,16));
 
 		game->AddNewObject(shot);
