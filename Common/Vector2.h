@@ -29,6 +29,11 @@ namespace NCL {
 				this->y = y;
 			}
 
+			Vector2(const Vector2& other) {
+				this->x = other.x;
+				this->y = other.y;
+			}
+
 			~Vector2(void) {}
 
 			float x;
@@ -43,7 +48,7 @@ namespace NCL {
 				return sqrtf(x * x + y * y);
 			}
 
-			void normalize() {
+			Vector2* normalize() {
 				bool x0 = negl(x);
 				bool y0 = negl(y);
 
@@ -51,27 +56,48 @@ namespace NCL {
 					x = 0.0f;
 					y = y > 0 ? 1.0f : -1.0f;
 
-					return;
+					return this;
 				}
 				
 				if (y0 && !x0) {
 					x = x > 0 ? 1.0f : -1.0f;
 					y = 0.0f;
 
-					return;
+					return this;
 				}
 				
 				if (y0 && x0) {
 					x = 0.0f;
 					y = 0.0f;
 
-					return;
+					return this;
 				}
 
 				float mag = magnitude();
 					
 				x = x / mag;
 				y = y / mag;
+
+				return this;
+			}
+
+			Vector2 getNormalized() {
+				Vector2 copy(x, y);
+				return *copy.normalize();
+			}
+
+			float getAngle(bool clockwise = true) {
+			    if (clockwise) {
+                    return atan2(y, x);
+			    } else {
+                    return atan2(x, y);
+			    }
+
+			}
+
+			Vector2 getAbsolute() {
+			    Vector2 copy(abs(x), abs(y));
+			    return copy;
 			}
 
 			inline friend std::ostream& operator<<(std::ostream& o, const Vector2& v) {

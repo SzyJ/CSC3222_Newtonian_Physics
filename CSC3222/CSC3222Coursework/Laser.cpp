@@ -32,10 +32,13 @@ Vector4 frames[16] = {
 	Vector4(1, 50, 15, 8)
 };
 
-Laser::Laser(Vector2& direction) : SimObject()	{
+Laser::Laser(Vector2& direction)
+    : SimObject() {
 	texture = texManager->GetTexture("bullet.png");
 
-	velocity = direction;
+    Vector2 normalizedDir = direction.getNormalized();
+	velocity = normalizedDir.getAbsolute() * SPEED;
+	FIRE_DIR = normalizedDir;
 }
 
 Laser::~Laser()	{
@@ -47,20 +50,11 @@ void Laser::DrawObject(GameSimsRenderer &r) {
 	Vector2 texPos;
 	Vector2 texSize = Vector2(16, 16);
 
-	float test = atan2(velocity.y, velocity.x);
+	float radAngle = FIRE_DIR.getAngle();
+	radAngle += PI;
+	radAngle *= 16.0f / (2 * PI);
 
-	float degrees = Maths::RadiansToDegrees(test);
-
-	degrees += 180.0f;
-
-	if (degrees == 360.0f) {
-		degrees = 0;
-	}
-
-	degrees /= 360.0f;
-	degrees *= 16.0f;
-
-	int frame = (int)degrees;
+	int frame = (int) radAngle % 16;
 
 	texPos.x = frames[frame].x;
 	texPos.y = frames[frame].y;
@@ -68,18 +62,19 @@ void Laser::DrawObject(GameSimsRenderer &r) {
 	texSize.x = frames[frame].z;
 	texSize.y = frames[frame].w;
 
-
 	r.DrawTextureArea((OGLTexture*)texture, texPos, texSize, screenPos);
 }
 
 bool Laser::UpdateObject(float dt) {
-	const float SPEED = 98.0f;
+    // Using v = u + at
+    velocity.x += ACCELERATION * dt;
+    velocity.y += ACCELERATION * dt;
 
-	position.x += velocity.x * SPEED * dt;
-	position.y += velocity.y * SPEED * dt;
+	// Using s = vt - 0.5at^2
+    float xDisplacement = velocity.x * dt - (0.5f * ACCELERATION * dt * dt);
+    float yDisplacement = velocity.y * dt - (0.5f * ACCELERATION * dt * dt);
+    position.x += xDisplacement * FIRE_DIR.x;
+    position.y += yDisplacement * FIRE_DIR.y;
 
-	if (position.x ) {
-
-	}
 	return true;
 }
