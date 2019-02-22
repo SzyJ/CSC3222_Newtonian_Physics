@@ -1,0 +1,106 @@
+cmake_minimum_required(VERSION 3.13)
+project(CSC3222_Codebase)
+
+set(CMAKE_CXX_STANDARD 14)
+
+include_directories(Common)
+include_directories(Common/stb)
+include_directories(CSC3222/CSC3222Coursework)
+include_directories(FontBuilder)
+include_directories(Plugins/OpenGLRendering)
+include_directories(Plugins/OpenGLRendering/glad)
+include_directories(Plugins/OpenGLRendering/KHR)
+
+add_executable(CSC3222_Codebase
+        Common/stb/stb_image.h
+        Common/stb/stb_image_write.h
+        Common/stb/stb_truetype.h
+        Common/Assets.cpp
+        Common/Assets.h
+        Common/Camera.cpp
+        Common/Camera.h
+        Common/GameTimer.cpp
+        Common/GameTimer.h
+        Common/Keyboard.cpp
+        Common/Keyboard.h
+        Common/Maths.cpp
+        Common/Maths.h
+        Common/Matrix2.cpp
+        Common/Matrix2.h
+        Common/Matrix3.cpp
+        Common/Matrix3.h
+        Common/Matrix4.cpp
+        Common/Matrix4.h
+        Common/MeshGeometry.cpp
+        Common/MeshGeometry.h
+        Common/Mouse.cpp
+        Common/Mouse.h
+        Common/Plane.cpp
+        Common/Plane.h
+        Common/Quaternion.cpp
+        Common/Quaternion.h
+        Common/RendererBase.cpp
+        Common/RendererBase.h
+        Common/ShaderBase.cpp
+        Common/ShaderBase.h
+        Common/SimpleFont.cpp
+        Common/SimpleFont.h
+        Common/TextureBase.cpp
+        Common/TextureBase.h
+        Common/TextureLoader.cpp
+        Common/TextureLoader.h
+        Common/TextureWriter.cpp
+        Common/TextureWriter.h
+        Common/Vector2.h
+        Common/Vector3.h
+        Common/Vector4.h
+        Common/Win32Keyboard.cpp
+        Common/Win32Keyboard.h
+        Common/Win32Mouse.cpp
+        Common/Win32Mouse.h
+        Common/Win32Window.cpp
+        Common/Win32Window.h
+        Common/Window.cpp
+        Common/Window.h
+        CSC3222/CSC3222Coursework/CollectableRobot.cpp
+        CSC3222/CSC3222Coursework/CollectableRobot.h
+        CSC3222/CSC3222Coursework/CollisionVolume.cpp
+        CSC3222/CSC3222Coursework/CollisionVolume.h
+        CSC3222/CSC3222Coursework/CSC3222.cpp
+        CSC3222/CSC3222Coursework/EnemyRobot.cpp
+        CSC3222/CSC3222Coursework/EnemyRobot.h
+        CSC3222/CSC3222Coursework/GameMap.cpp
+        CSC3222/CSC3222Coursework/GameMap.h
+        CSC3222/CSC3222Coursework/GameSimsPhysics.cpp
+        CSC3222/CSC3222Coursework/GameSimsPhysics.h
+        CSC3222/CSC3222Coursework/GameSimsRenderer.cpp
+        CSC3222/CSC3222Coursework/GameSimsRenderer.h
+        CSC3222/CSC3222Coursework/Laser.cpp
+        CSC3222/CSC3222Coursework/Laser.h
+        CSC3222/CSC3222Coursework/MovementDirection.h
+        CSC3222/CSC3222Coursework/PlayerRobot.cpp
+        CSC3222/CSC3222Coursework/PlayerRobot.h
+        CSC3222/CSC3222Coursework/RigidBody.cpp
+        CSC3222/CSC3222Coursework/RigidBody.h
+        CSC3222/CSC3222Coursework/Robot.cpp
+        CSC3222/CSC3222Coursework/Robot.h
+        CSC3222/CSC3222Coursework/RobotRescueGame.cpp
+        CSC3222/CSC3222Coursework/RobotRescueGame.h
+        CSC3222/CSC3222Coursework/SimObject.cpp
+        CSC3222/CSC3222Coursework/SimObject.h
+        CSC3222/CSC3222Coursework/TextureManager.cpp
+        CSC3222/CSC3222Coursework/TextureManager.h
+        FontBuilder/Source.cpp
+        FontBuilder/stb_truetype.h
+        Plugins/OpenGLRendering/glad/glad.h
+        Plugins/OpenGLRendering/KHR/khrplatform.h
+        Plugins/OpenGLRendering/KHR/wglext.h
+        Plugins/OpenGLRendering/glad.c
+        Plugins/OpenGLRendering/OGLMesh.cpp
+        Plugins/OpenGLRendering/OGLMesh.h
+        Plugins/OpenGLRendering/OGLRenderer.cpp
+        Plugins/OpenGLRendering/OGLRenderer.h
+        Plugins/OpenGLRendering/OGLShader.cpp
+        Plugins/OpenGLRendering/OGLShader.h
+        Plugins/OpenGLRendering/OGLTexture.cpp
+        Plugins/OpenGLRendering/OGLTexture.h)
