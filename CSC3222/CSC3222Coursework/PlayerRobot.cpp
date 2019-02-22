@@ -21,32 +21,37 @@ PlayerRobot::~PlayerRobot()	{
 bool PlayerRobot::UpdateObject(float dt) {
 	float testSpeed = 64;
 
+	// Calculate Direction
 	Vector2 newVelocity;
-
 	if (Window::GetKeyboard()->KeyDown(KEYBOARD_A)) {
 		currentAnimDir = MovementDir::Left;
 		UpdateAnimFrame(dt);
 
-		newVelocity.x = -testSpeed * dt;
+		newVelocity.x = -1.0f;
 	}
 	if (Window::GetKeyboard()->KeyDown(KEYBOARD_D)) {
 		currentAnimDir = MovementDir::Right;
 		UpdateAnimFrame(dt);
 
-		newVelocity.x = testSpeed * dt;
+		newVelocity.x = 1.0f;
 	}
+
 	if (Window::GetKeyboard()->KeyDown(KEYBOARD_W)) {
 		currentAnimDir = MovementDir::Up;
-		UpdateAnimFrame(dt);
+		UpdateAnimFrame(dt);	
 
-		newVelocity.y = -testSpeed * dt;
+		newVelocity.y = -1.0f;
 	}
 	if (Window::GetKeyboard()->KeyDown(KEYBOARD_S)) {
 		currentAnimDir = MovementDir::Down;
 		UpdateAnimFrame(dt);
 
-		newVelocity.y = testSpeed * dt;
+		newVelocity.y = 1.0f;
 	}
+
+	// Set speed
+	newVelocity.normalize();
+	newVelocity *= testSpeed * dt;
 
 	position += newVelocity;
 

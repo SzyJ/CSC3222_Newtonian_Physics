@@ -70,11 +70,11 @@ void Laser::DrawObject(GameSimsRenderer &r) {
 
 
 	r.DrawTextureArea((OGLTexture*)texture, texPos, texSize, screenPos);
-
 }
 
 bool Laser::UpdateObject(float dt) {
 	const float SPEED = 98.0f;
+
 	position.x += velocity.x * SPEED * dt;
 	position.y += velocity.y * SPEED * dt;
 

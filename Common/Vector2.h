@@ -39,6 +39,41 @@ namespace NCL {
 				y = 0.0f;
 			}
 
+			float magnitude() {
+				return sqrtf(x * x + y * y);
+			}
+
+			void normalize() {
+				bool x0 = negl(x);
+				bool y0 = negl(y);
+
+				if (x0 && !y0) {
+					x = 0.0f;
+					y = y > 0 ? 1.0f : -1.0f;
+
+					return;
+				}
+				
+				if (y0 && !x0) {
+					x = x > 0 ? 1.0f : -1.0f;
+					y = 0.0f;
+
+					return;
+				}
+				
+				if (y0 && x0) {
+					x = 0.0f;
+					y = 0.0f;
+
+					return;
+				}
+
+				float mag = magnitude();
+					
+				x = x / mag;
+				y = y / mag;
+			}
+
 			inline friend std::ostream& operator<<(std::ostream& o, const Vector2& v) {
 				o << "Vector2(" << v.x << "," << v.y << ")" << std::endl;
 				return o;
@@ -82,6 +117,12 @@ namespace NCL {
 			inline void operator/=(float f) {
 				x /= f;
 				y /= f;
+			}
+
+		private:
+			bool negl(float f) {
+				const float small = 0.000001f;
+				return f > -small && f < small;
 			}
 		};
 	}
