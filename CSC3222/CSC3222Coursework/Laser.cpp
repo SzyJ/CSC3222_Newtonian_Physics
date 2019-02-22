@@ -37,7 +37,10 @@ Laser::Laser(Vector2& direction)
 	texture = texManager->GetTexture("bullet.png");
 
     Vector2 normalizedDir = direction.getNormalized();
-	velocity = normalizedDir.getAbsolute() * SPEED;
+    velocity = normalizedDir * INITIAL_VELOCITY;
+    force = normalizedDir * FIRE_FORCE;
+    inverseMass = 1.0f / MASS;
+
 	FIRE_DIR = normalizedDir;
 }
 
@@ -66,15 +69,6 @@ void Laser::DrawObject(GameSimsRenderer &r) {
 }
 
 bool Laser::UpdateObject(float dt) {
-    // Using v = u + at
-    velocity.x += ACCELERATION * dt;
-    velocity.y += ACCELERATION * dt;
-
-	// Using s = vt - 0.5at^2
-    float xDisplacement = velocity.x * dt - (0.5f * ACCELERATION * dt * dt);
-    float yDisplacement = velocity.y * dt - (0.5f * ACCELERATION * dt * dt);
-    position.x += xDisplacement * FIRE_DIR.x;
-    position.y += yDisplacement * FIRE_DIR.y;
 
 	return true;
 }
