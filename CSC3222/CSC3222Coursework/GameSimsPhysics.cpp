@@ -48,7 +48,7 @@ void GameSimsPhysics::RemoveCollider(CollisionVolume* c) {
 void GameSimsPhysics::Integration(float dt) {
 	for (RigidBody* body : allBodies) {
 		Vector2 accel = body->force * body->inverseMass;
-		body->velocity += accel * dt;
+		body->velocity += accel * dt * SLOWDOWN_FACOTR;
 		body->position += body->velocity * dt;
 
 	}

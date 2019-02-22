@@ -26,6 +26,8 @@ namespace NCL {
 
 			std::vector<RigidBody*>			allBodies;
 			std::vector<CollisionVolume*>	allColliders;
+		private:
+			const float SLOWDOWN_FACOTR = 0.99999999f;
 		};
 	}
 }
