@@ -6,6 +6,7 @@
 
 #include "../../Common/Vector3.h"
 #include "../../Common/Vector4.h"
+#include "CollisionVolume.h"
 
 using namespace NCL;
 using namespace CSC3222;
@@ -42,6 +43,8 @@ Laser::Laser(Vector2& direction)
     inverseMass = 1.0f / MASS;
 
 	FIRE_DIR = normalizedDir;
+
+	SetCollider(new CollisionVolume(Shape::Square, 8.0f, &position));
 }
 
 Laser::~Laser()	{

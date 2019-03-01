@@ -1,3 +1,4 @@
+#include <string>
 #include "GameSimsPhysics.h"
 #include "RigidBody.h"
 #include "CollisionVolume.h"
@@ -55,5 +56,12 @@ void GameSimsPhysics::Integration(float dt) {
 }
 
 void GameSimsPhysics::CollisionDetection(float dt) {
-
+    for(int i = 0; i < allColliders.size(); ++i) {
+        for(int j = i + 1; j < allColliders.size(); ++j) {
+            if (allColliders[i]->collidesWith(allColliders[j])) {
+            	// Do Something
+            	std::cout << "Hit (" << std::to_string(allColliders[i]->getShape()) << ", " << std::to_string(allColliders[j]->getShape()) << ")" << std::endl;
+            }
+        }
+    }
 }

@@ -1,6 +1,8 @@
 #include "EnemyRobot.h"
 #include "TextureManager.h"
 #include "../../Common/TextureLoader.h"
+#include "CollisionVolume.h"
+
 using namespace NCL;
 using namespace CSC3222;
 using namespace Rendering;
@@ -9,6 +11,8 @@ EnemyRobot::EnemyRobot() : Robot()	{
 	texture = texManager->GetTexture("Turret Bot overgrown.png");
 
 	moving = false;
+
+	SetCollider(new CollisionVolume(Shape::Circle, 16.0f, &position));
 }
 
 EnemyRobot::~EnemyRobot()	{
