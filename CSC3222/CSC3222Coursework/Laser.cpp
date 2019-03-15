@@ -44,7 +44,7 @@ Laser::Laser(Vector2& direction)
 
 	FIRE_DIR = normalizedDir;
 
-	SetCollider(new CollisionVolume(Shape::Square, 8.0f, &position));
+	SetCollider(new CollisionVolume(Shape::Circle, 8.0f, &position));
 }
 
 Laser::~Laser()	{
@@ -69,6 +69,8 @@ void Laser::DrawObject(GameSimsRenderer &r) {
 	texSize.y = frames[frame].w;
 
 	r.DrawTextureArea((OGLTexture*)texture, texPos, texSize, screenPos);
+
+	r.DrawString(".", Vector2(screenPos.x + 4.0f, screenPos.y + 4.0f));
 }
 
 bool Laser::UpdateObject(float dt) {

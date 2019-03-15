@@ -17,7 +17,7 @@ using namespace CSC3222;
 RobotRescueGame::RobotRescueGame()	{
 	renderer	= new GameSimsRenderer();
 	texManager	= new TextureManager();
-	physics		= new GameSimsPhysics();
+	physics		= new GameSimsPhysics(renderer);
 	SimObject::InitObjects(this, texManager);
 	InitialiseGame();
 }

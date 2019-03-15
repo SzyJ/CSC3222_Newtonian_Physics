@@ -1,4 +1,5 @@
 #include <algorithm>
+#include "../../Common/Maths.h"
 #include "CollisionVolume.h"
 
 using namespace NCL;
@@ -14,6 +15,8 @@ CollisionVolume::~CollisionVolume()
 {
 }
 
+
+// Square-Circle collision not working yet!!!!!!!!!
 bool CollisionVolume::squareCircleCollision(const CollisionVolume& square, const CollisionVolume& circle) {
     float circleWidth = circle.getWidth();
     float circleR = circleWidth * 0.5f;
@@ -29,10 +32,15 @@ bool CollisionVolume::squareCircleCollision(const CollisionVolume& square, const
     float squareLowerEdge = squareY + squareHalfWidth;
     float squareUpperEdge = squareY - squareHalfWidth;
 
-    float xDiff = circleX - std::max(squareLeftEdge, std::min(circleX, squareRightEdge));
-    float yDiff = circleY - std::max(squareLowerEdge, std::min(circleY, squareUpperEdge));
+	float closestX = NCL::Maths::Clamp(circleX, squareLeftEdge, squareRightEdge);
+    float closestY = NCL::Maths::Clamp(circleY, squareUpperEdge, squareLowerEdge);
 
-    return (xDiff * xDiff + yDiff * yDiff) < (circleR * circleR);
+    //float xDiff = circleX - std::max(squareLeftEdge, std::min(circleX, squareRightEdge));
+    //float yDiff = circleY - std::max(squareLowerEdge, std::min(circleY, squareUpperEdge));
+
+    //return (xDiff * xDiff + yDiff * yDiff) < (circleR * circleR);
+
+	return (closestX * closestX) + (closestY * closestY) < circleR * circleR;
 }
 
 bool CollisionVolume::circleCircleCollision(const CollisionVolume& thisCircle, const CollisionVolume& otherCircle) {

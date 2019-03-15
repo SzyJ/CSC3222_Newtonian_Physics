@@ -3,6 +3,7 @@
 #include "RigidBody.h"
 #include "CollisionVolume.h"
 #include "../../Common/Vector2.h"
+#include "GameSimsRenderer.h"
 
 using namespace NCL;
 using namespace CSC3222;
@@ -54,14 +55,26 @@ void GameSimsPhysics::Integration(float dt) {
 
 	}
 }
+/*
+void GameSimsPhysics::CollisionDetection(float dt) {
+	for (int i = 0; i < allColliders.size(); ++i) {
+		for (int j = i + 1; j < allColliders.size(); ++j) {
+			if (allColliders[i]->collidesWith(allColliders[j])) {
+				// Do Something
+				std::cout << "Hit (" << std::to_string(allColliders[i]->getShape()) << ", " << std::to_string(allColliders[j]->getShape()) << ")" << std::endl;
+			}
+		}
+	}
+}*/
 
 void GameSimsPhysics::CollisionDetection(float dt) {
-    for(int i = 0; i < allColliders.size(); ++i) {
-        for(int j = i + 1; j < allColliders.size(); ++j) {
-            if (allColliders[i]->collidesWith(allColliders[j])) {
-            	// Do Something
-            	std::cout << "Hit (" << std::to_string(allColliders[i]->getShape()) << ", " << std::to_string(allColliders[j]->getShape()) << ")" << std::endl;
-            }
-        }
-    }
+	for (int i = 0; i < allColliders.size(); ++i) {
+		for (int j = i + 1; j < allColliders.size(); ++j) {
+			if (allColliders[i]->collidesWith(allColliders[j])) {
+				// Do Something
+				r->DrawString("X", *allColliders[i]->getPosition());
+				//std::cout << "Hit (" << std::to_string(allColliders[i]->getShape()) << ", " << std::to_string(allColliders[j]->getShape()) << ")" << std::endl;
+			}
+		}
+	}
 }

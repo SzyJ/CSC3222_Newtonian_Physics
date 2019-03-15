@@ -66,6 +66,5 @@ bool EnemyRobot::UpdateObject(float dt) {
 	}
 
 
-
 	return true;
 }

@@ -3,6 +3,7 @@
 #include "TextureManager.h"
 #include "RobotRescueGame.h"
 #include "../../Common/Window.h"
+#include "CollisionVolume.h"
 
 using namespace NCL;
 using namespace CSC3222;
@@ -12,6 +13,8 @@ PlayerRobot::PlayerRobot() : Robot()	{
 	texture = texManager->GetTexture("Turret Bot.png");
 
 	position = Vector2(32, 32);
+
+	SetCollider(new CollisionVolume(Shape::Circle, 16.0f, &position));
 }
 
 PlayerRobot::~PlayerRobot()	{
@@ -66,7 +69,7 @@ bool PlayerRobot::UpdateObject(float dt) {
 			? -1 :
 		currentAnimDir == MovementDir::Down
 			? 1 : 0)));
-		shot->SetPosition(position + Vector2(8,16));
+		shot->SetPosition(position + Vector2(4,8));
 
 		game->AddNewObject(shot);
 	}

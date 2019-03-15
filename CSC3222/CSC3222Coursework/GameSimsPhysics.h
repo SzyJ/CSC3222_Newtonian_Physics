@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "../../Common/Vector2.h"
+#include "GameSimsRenderer.h"
 
 namespace NCL {
 	namespace CSC3222 {
@@ -9,10 +10,16 @@ namespace NCL {
 
 		class GameSimsPhysics	{
 		public:
-			GameSimsPhysics();
+			GameSimsRenderer* r;
+
+		 	GameSimsPhysics();
+			GameSimsPhysics(GameSimsRenderer* r)
+				:r(r) {}
 			~GameSimsPhysics();
 
+			// Temp Debug code
 			void Update(float dt);
+			//void Update(float dt);
 
 			void AddRigidBody(RigidBody* b);
 			void RemoveRigidBody(RigidBody* b);

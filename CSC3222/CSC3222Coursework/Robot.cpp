@@ -31,6 +31,7 @@ void Robot::DrawObject(GameSimsRenderer &r) {
 
 	r.DrawTextureArea((OGLTexture*)texture, texPos, texSize, screenPos, flips[currentAnimDir]);
 
+	r.DrawString("O", Vector2(screenPos.x + 8, screenPos.y + 8));
 }
 
 void Robot::UpdateAnimFrame(float dt) {

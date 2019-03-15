@@ -3,6 +3,7 @@
 #include "TextureManager.h"
 #include "../../Common/TextureLoader.h"
 #include "../../Common/Vector4.h"
+#include "CollisionVolume.h"
 
 using namespace NCL;
 using namespace CSC3222;
@@ -28,6 +29,8 @@ CollectableRobot::CollectableRobot() : SimObject()	{
 	else {
 		texture = texManager->GetTexture("Gum Bot Sprites.png");
 	}
+
+	SetCollider(new CollisionVolume(Shape::Circle, 16.0f, &position));
 }
 
 CollectableRobot::CollectableRobot(RobotType type) : CollectableRobot() {
@@ -45,6 +48,8 @@ void CollectableRobot::DrawObject(GameSimsRenderer &r) {
 	Vector2 screenPos = position;
 
 	r.DrawTextureArea((OGLTexture*)texture, texPos, texSize, screenPos, false);
+
+	r.DrawString("c", Vector2(screenPos.x + 8, screenPos.y + 8));
 }
 
 bool CollectableRobot::UpdateObject(float dt) {
