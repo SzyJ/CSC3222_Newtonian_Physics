@@ -84,6 +84,8 @@ add_executable(CSC3222_Codebase
         CSC3222/CSC3222Coursework/RigidBody.h
         CSC3222/CSC3222Coursework/Robot.cpp
         CSC3222/CSC3222Coursework/Robot.h
+        CSC3222/CSC3222Coursework/WallTile.h
+        CSC3222/CSC3222Coursework/WallTile.cpp
         CSC3222/CSC3222Coursework/RobotRescueGame.cpp
         CSC3222/CSC3222Coursework/RobotRescueGame.h
         CSC3222/CSC3222Coursework/SimObject.cpp

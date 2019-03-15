@@ -17,9 +17,9 @@ namespace NCL {
 			const float X_OFFSET;
             const float Y_OFFSET;
 
-			bool squareCircleCollision(const CollisionVolume& square, const CollisionVolume& circle);
-			bool circleCircleCollision(const CollisionVolume& thisCircle, const CollisionVolume& otherCircle);
-			bool squareSquareCollision(const CollisionVolume& thisSquare, const CollisionVolume& otherSquare);
+			static bool squareCircleCollision(const CollisionVolume& square, const CollisionVolume& circle);
+			static bool circleCircleCollision(const CollisionVolume& thisCircle, const CollisionVolume& otherCircle);
+			static bool squareSquareCollision(const CollisionVolume& thisSquare, const CollisionVolume& otherSquare);
 
 		public:
 			CollisionVolume(Shape shape, float width, NCL::Maths::Vector2* pos, float xOffset = 0, float yOffset = 0);

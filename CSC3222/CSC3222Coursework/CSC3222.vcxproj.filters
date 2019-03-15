@@ -66,6 +66,9 @@
     <ClCompile Include="CollisionVolume.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
+    <ClCompile Include="WallTile.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameMap.h">
@@ -106,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="CollisionVolume.h">
       <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="WallTile.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

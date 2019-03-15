@@ -3,6 +3,8 @@
 #include "TextureManager.h"
 #include "../../Common/Assets.h"
 #include "../../Common/TextureLoader.h"
+#include "CollisionVolume.h"
+#include "WallTile.h"
 #include <fstream>
 #include <iostream>
 
@@ -33,7 +35,7 @@ Vector4 buildingTypes[4] = {
 };
 
 
-GameMap::GameMap(const std::string& filename, std::vector<SimObject*>& objects, TextureManager& texManager)	{
+GameMap::GameMap(const std::string& filename, std::vector<SimObject*>& objects, TextureManager& texManager) {
 	tileTexture = texManager.GetTexture("Colony.png");
 
 	std::ifstream mapFile(Assets::DATADIR + filename);
@@ -56,6 +58,12 @@ GameMap::GameMap(const std::string& filename, std::vector<SimObject*>& objects, 
 
 			mapFile >> type;
 
+			if (type == 1) { // TODO FIX this!!!
+
+			    std::cout << "Added Wall!" << std::endl;
+				WallTile* test = new WallTile(new Vector2(x, y));
+			    objects.emplace_back();
+			}
 			mapData[tileIndex] = (MapTileType)(type - 48);
 		}
 	}

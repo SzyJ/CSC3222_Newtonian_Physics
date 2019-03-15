@@ -5,6 +5,7 @@
 #include "../../Common/Vector2.h"
 #include "../../Common/Vector3.h"
 #include "../../Common/Vector4.h"
+#include "GameSimsPhysics.h"
 
 namespace NCL {
 	namespace Rendering {

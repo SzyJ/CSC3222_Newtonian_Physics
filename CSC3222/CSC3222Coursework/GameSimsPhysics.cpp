@@ -30,6 +30,7 @@ void GameSimsPhysics::RemoveRigidBody(RigidBody* b) {
 
 	if (at != allBodies.end()) {
 		//maybe delete too?
+		// delete b; ??
 		allBodies.erase(at);
 	}
 }
@@ -55,17 +56,6 @@ void GameSimsPhysics::Integration(float dt) {
 
 	}
 }
-/*
-void GameSimsPhysics::CollisionDetection(float dt) {
-	for (int i = 0; i < allColliders.size(); ++i) {
-		for (int j = i + 1; j < allColliders.size(); ++j) {
-			if (allColliders[i]->collidesWith(allColliders[j])) {
-				// Do Something
-				std::cout << "Hit (" << std::to_string(allColliders[i]->getShape()) << ", " << std::to_string(allColliders[j]->getShape()) << ")" << std::endl;
-			}
-		}
-	}
-}*/
 
 void GameSimsPhysics::CollisionDetection(float dt) {
 	for (int i = 0; i < allColliders.size(); ++i) {
