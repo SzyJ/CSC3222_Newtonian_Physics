@@ -12,7 +12,7 @@ EnemyRobot::EnemyRobot() : Robot()	{
 
 	moving = false;
 
-	SetCollider(new CollisionVolume(Shape::Circle, 16.0f, &position));
+	SetCollider(new CollisionVolume(Shape::Circle, 16.0f, &position, COLLISION_X_OFFSET, COLLISION_Y_OFFSET));
 }
 
 EnemyRobot::~EnemyRobot()	{
@@ -24,7 +24,6 @@ void EnableGravity(float delta) {
 
 bool EnemyRobot::UpdateObject(float dt) {
 	thinkTime -= dt;
-
 	if (moving) {
 		position += velocity * dt;
 		UpdateAnimFrame(dt);
@@ -64,7 +63,6 @@ bool EnemyRobot::UpdateObject(float dt) {
 			currentAnimDir = MovementDir::Down;
 		}
 	}
-
 
 	return true;
 }

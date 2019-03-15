@@ -5,8 +5,8 @@
 using namespace NCL;
 using namespace CSC3222;
 
-CollisionVolume::CollisionVolume(Shape shape, float width, NCL::Maths::Vector2* pos)
-    : shape(shape), width(width), position(pos)
+CollisionVolume::CollisionVolume(Shape shape, float width, NCL::Maths::Vector2* pos, float xOffset, float yOffset)
+    : shape(shape), width(width), position(pos), X_OFFSET(xOffset), Y_OFFSET(yOffset)
 {
 }
 
@@ -15,44 +15,43 @@ CollisionVolume::~CollisionVolume()
 {
 }
 
-
-// Square-Circle collision not working yet!!!!!!!!!
 bool CollisionVolume::squareCircleCollision(const CollisionVolume& square, const CollisionVolume& circle) {
     float circleWidth = circle.getWidth();
     float circleR = circleWidth * 0.5f;
-    float circleX = circle.getPosition()->x + circleR;
-    float circleY = circle.getPosition()->y + circleR;
+    float circleX = circle.getPosition()->x + circle.getXOffset() + circleR;
+    float circleY = circle.getPosition()->y + circle.getYOffset() + circleR;
 
     float squareWidth = square.getWidth();
     float squareHalfWidth = squareWidth * 0.5f;
-    float squareX = square.getPosition()->x + squareHalfWidth;
-    float squareY = square.getPosition()->y + squareHalfWidth;
-    float squareLeftEdge =  squareX - squareHalfWidth;
-    float squareRightEdge = squareX + squareHalfWidth;
-    float squareLowerEdge = squareY + squareHalfWidth;
-    float squareUpperEdge = squareY - squareHalfWidth;
+    float squareX = square.getPosition()->x + square.getXOffset() + squareHalfWidth;
+    float squareY = square.getPosition()->y + square.getYOffset() + squareHalfWidth;
 
-	float closestX = NCL::Maths::Clamp(circleX, squareLeftEdge, squareRightEdge);
-    float closestY = NCL::Maths::Clamp(circleY, squareUpperEdge, squareLowerEdge);
 
-    //float xDiff = circleX - std::max(squareLeftEdge, std::min(circleX, squareRightEdge));
-    //float yDiff = circleY - std::max(squareLowerEdge, std::min(circleY, squareUpperEdge));
+    float xDifference = std::abs(circleX - squareX);
+    float yDifference = std::abs(circleY - squareY);
 
-    //return (xDiff * xDiff + yDiff * yDiff) < (circleR * circleR);
+    float minDistance = squareHalfWidth + circleR;
 
-	return (closestX * closestX) + (closestY * closestY) < circleR * circleR;
+    if (xDifference > minDistance || yDifference > minDistance) { return false; }
+    if (xDifference <= squareHalfWidth || yDifference <= squareHalfWidth) {return true; }
+
+    float xDistance = xDifference - squareHalfWidth;
+    float yDistance = yDifference - squareHalfWidth;
+    float cornerDistanceSquared = (xDistance * xDistance) + (yDistance * yDistance);
+
+    return cornerDistanceSquared <= (circleR * circleR);
 }
 
 bool CollisionVolume::circleCircleCollision(const CollisionVolume& thisCircle, const CollisionVolume& otherCircle) {
     float thisCircleWidth = thisCircle.getWidth();
     float thisCircleR = thisCircleWidth * 0.5f;
-    float thisCircleX = thisCircle.getPosition()->x + thisCircleR;
-    float thisCircleY = thisCircle.getPosition()->y + thisCircleR;
+    float thisCircleX = thisCircle.getPosition()->x + thisCircle.getXOffset() + thisCircleR;
+    float thisCircleY = thisCircle.getPosition()->y + thisCircle.getYOffset() + thisCircleR;
 
     float otherCircleWidth = otherCircle.getWidth();
     float otherCircleR = otherCircleWidth * 0.5f;
-    float otherCircleX = otherCircle.getPosition()->x + otherCircleR;
-    float otherCircleY = otherCircle.getPosition()->y + otherCircleR;
+    float otherCircleX = otherCircle.getPosition()->x + otherCircle.getXOffset() + otherCircleR;
+    float otherCircleY = otherCircle.getPosition()->y + otherCircle.getYOffset() + otherCircleR;
 
     float distanceDiff = sqrt(
             pow(abs(otherCircleX - thisCircleX), 2) +
@@ -64,13 +63,13 @@ bool CollisionVolume::circleCircleCollision(const CollisionVolume& thisCircle, c
 bool CollisionVolume::squareSquareCollision(const CollisionVolume& thisSquare, const CollisionVolume& otherSquare) {
     float otherSquareWidth = otherSquare.getWidth();
     float otherSquareHalfWidth = otherSquareWidth * 0.5f;
-    float otherSquareX = otherSquare.getPosition()->x + otherSquareHalfWidth;
-    float otherSquareY = otherSquare.getPosition()->y + otherSquareHalfWidth;
+    float otherSquareX = otherSquare.getPosition()->x + otherSquare.getXOffset() + otherSquareHalfWidth;
+    float otherSquareY = otherSquare.getPosition()->y + otherSquare.getYOffset() + otherSquareHalfWidth;
 
     float thisSquareWidth = thisSquare.getWidth();
     float thisSquareHalfWidth = thisSquareWidth * 0.5f;
-    float thisSquareX = thisSquare.getPosition()->x + thisSquareHalfWidth;
-	float thisSquareY = thisSquare.getPosition()->y + thisSquareHalfWidth;
+    float thisSquareX = thisSquare.getPosition()->x + thisSquare.getXOffset() + thisSquareHalfWidth;
+	float thisSquareY = thisSquare.getPosition()->y + thisSquare.getYOffset() + thisSquareHalfWidth;
 
     return (abs(otherSquareX - thisSquareX) * 2 < (otherSquareWidth + thisSquareWidth)) &&
            (abs(otherSquareY - thisSquareY) * 2 < (otherSquareWidth + thisSquareWidth));
@@ -101,4 +100,12 @@ const float CollisionVolume::getWidth() const {
 
 const NCL::Maths::Vector2* CollisionVolume::getPosition() const {
     return position;
+}
+
+const float CollisionVolume::getXOffset() const {
+    return X_OFFSET;
+}
+
+const float CollisionVolume::getYOffset() const {
+    return Y_OFFSET;
 }

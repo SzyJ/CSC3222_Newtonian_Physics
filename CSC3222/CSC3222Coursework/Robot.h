@@ -18,6 +18,9 @@ namespace NCL {
 				Right
 			};
 
+			const float COLLISION_X_OFFSET = 0;
+			const float COLLISION_Y_OFFSET = 16;
+
 			void UpdateAnimFrame(float dt);
 
 			MovementDir currentAnimDir;

@@ -8,7 +8,7 @@ namespace NCL {
 			friend class GameSimsPhysics;
 		public:
 			RigidBody();
-			~RigidBody();
+			virtual ~RigidBody();
 
 			Vector2 GetPosition() const {
 				return position;

@@ -14,7 +14,7 @@ PlayerRobot::PlayerRobot() : Robot()	{
 
 	position = Vector2(32, 32);
 
-	SetCollider(new CollisionVolume(Shape::Circle, 16.0f, &position));
+	SetCollider(new CollisionVolume(Shape::Circle, 16.0f, &position, COLLISION_X_OFFSET, COLLISION_Y_OFFSET));
 }
 
 PlayerRobot::~PlayerRobot()	{
@@ -69,7 +69,7 @@ bool PlayerRobot::UpdateObject(float dt) {
 			? -1 :
 		currentAnimDir == MovementDir::Down
 			? 1 : 0)));
-		shot->SetPosition(position + Vector2(4,8));
+		shot->SetPosition(position + Vector2(COLLISION_X_OFFSET + 8, COLLISION_Y_OFFSET + 8));
 
 		game->AddNewObject(shot);
 	}
