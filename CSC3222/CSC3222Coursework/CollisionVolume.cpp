@@ -26,7 +26,6 @@ bool CollisionVolume::squareCircleCollision(const CollisionVolume& square, const
     float squareX = square.getPosition()->x + square.getXOffset() + squareHalfWidth;
     float squareY = square.getPosition()->y + square.getYOffset() + squareHalfWidth;
 
-
     float xDifference = std::abs(circleX - squareX);
     float yDifference = std::abs(circleY - squareY);
 
@@ -77,6 +76,7 @@ bool CollisionVolume::squareSquareCollision(const CollisionVolume& thisSquare, c
 
 bool CollisionVolume::collidesWith(const CollisionVolume* other) {
     Shape otherShape = other->getShape();
+
     if (shape == Shape::Square && otherShape == Shape::Square) {
         return squareSquareCollision(*this, *other);
     } else if (shape == Shape::Circle && otherShape == Shape::Circle) {

@@ -50,6 +50,9 @@ GameMap::GameMap(const std::string& filename, std::vector<SimObject*>& objects, 
 
 	mapData = new MapTileType[mapWidth * mapHeight];
 
+	const int TILE_WIDTH = 16;
+    const char WALL_TILE = '1';
+
 	for (int y = 0; y < mapHeight; ++y) {
 		for (int x = 0; x < mapWidth; ++x) {
 			int tileIndex = (y * mapWidth) + x;
@@ -58,11 +61,9 @@ GameMap::GameMap(const std::string& filename, std::vector<SimObject*>& objects, 
 
 			mapFile >> type;
 
-			if (type == 1) { // TODO FIX this!!!
-
-			    std::cout << "Added Wall!" << std::endl;
-				WallTile* test = new WallTile(new Vector2(x, y));
-			    objects.emplace_back();
+			if (type == WALL_TILE) {
+				WallTile* test = new WallTile(new Vector2(x * TILE_WIDTH, y * TILE_WIDTH));
+			    objects.emplace_back(test);
 			}
 			mapData[tileIndex] = (MapTileType)(type - 48);
 		}

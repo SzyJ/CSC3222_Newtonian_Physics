@@ -69,8 +69,12 @@ void RobotRescueGame::InitialiseGame() {
 	}
 	gameObjects.clear();
 
-	currentMap = new GameMap("GameSimsRobotMap.txt", gameObjects, *texManager);
+	std::vector<SimObject*> walls;
+	currentMap = new GameMap("GameSimsRobotMap.txt", walls, *texManager);
 
+	for (SimObject* wall : walls) {
+		AddNewObject(wall);
+	}
 	renderer->SetScreenProperties(16, currentMap->GetMapWidth(), currentMap->GetMapHeight());
 
 	testRobot = new PlayerRobot();
