@@ -69,11 +69,11 @@ void RobotRescueGame::InitialiseGame() {
 	}
 	gameObjects.clear();
 
-	std::vector<SimObject*> walls;
+	std::vector<RigidBody*> walls;
 	currentMap = new GameMap("GameSimsRobotMap.txt", walls, *texManager);
 
-	for (SimObject* wall : walls) {
-		AddNewObject(wall);
+	for (RigidBody* wall : walls) {
+		physics->AddRigidBody(wall);
 	}
 	renderer->SetScreenProperties(16, currentMap->GetMapWidth(), currentMap->GetMapHeight());
 
@@ -101,9 +101,6 @@ void RobotRescueGame::InitialiseGame() {
 void RobotRescueGame::AddNewObject(SimObject* object) {
 	newObjects.emplace_back(object);
 	physics->AddRigidBody(object);
-	if (object->GetCollider()) {
-		physics->AddCollider(object->GetCollider());
-	}
 }
 
 void RobotRescueGame::AddEnemyRobot(const Vector2& position) {

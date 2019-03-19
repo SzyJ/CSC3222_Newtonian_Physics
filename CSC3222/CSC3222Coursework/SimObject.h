@@ -19,27 +19,22 @@ namespace NCL {
 			SimObject();
 			~SimObject();
 
-			void SetCollider(CollisionVolume * c) {
-				collider = c;
-			}
-
-			CollisionVolume* GetCollider() const {
-				return collider;
-			}
-
 			virtual bool UpdateObject(float dt) = 0;
 
 			virtual void DrawObject(GameSimsRenderer &r) = 0;
 
+
+
 			static void InitObjects(RobotRescueGame* game, TextureManager* manager);
 
 		protected:
-			CollisionVolume*		collider;
 			Rendering::TextureBase* texture;
 
 			static TextureManager*  texManager;
 			static RobotRescueGame* game;
+
+
+			virtual void OnCollision(RigidBody* otherBody) override;
 		};
 	}
 }
-

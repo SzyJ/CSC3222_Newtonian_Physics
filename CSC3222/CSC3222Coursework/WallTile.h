@@ -4,13 +4,13 @@
 
 namespace NCL {
     namespace CSC3222 {
-        class WallTile : public SimObject {
+        class WallTile : public RigidBody {
         public:
             WallTile(Vector2* pos);
             ~WallTile();
 
-            void DrawObject(GameSimsRenderer &r) override;
-            bool UpdateObject(float dt) override;
+        protected:
+            virtual void OnCollision(RigidBody* otherBody) override;
         };
     }
 }

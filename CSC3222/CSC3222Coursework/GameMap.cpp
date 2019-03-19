@@ -35,7 +35,7 @@ Vector4 buildingTypes[4] = {
 };
 
 
-GameMap::GameMap(const std::string& filename, std::vector<SimObject*>& objects, TextureManager& texManager) {
+GameMap::GameMap(const std::string& filename, std::vector<RigidBody*>& objects, TextureManager& texManager) {
 	tileTexture = texManager.GetTexture("Colony.png");
 
 	std::ifstream mapFile(Assets::DATADIR + filename);

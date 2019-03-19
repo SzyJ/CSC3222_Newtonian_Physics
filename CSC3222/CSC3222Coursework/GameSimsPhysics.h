@@ -8,7 +8,7 @@ namespace NCL {
 		class RigidBody;
 		class CollisionVolume;
 
-		class GameSimsPhysics	{
+		class GameSimsPhysics {
 		public:
 			GameSimsRenderer* r;
 
@@ -24,15 +24,11 @@ namespace NCL {
 			void AddRigidBody(RigidBody* b);
 			void RemoveRigidBody(RigidBody* b);
 
-			void AddCollider(CollisionVolume* c);
-			void RemoveCollider(CollisionVolume* c);
-
 		protected:
 			void Integration(float dt);
 			void CollisionDetection(float dt);
 
 			std::vector<RigidBody*>			allBodies;
-			std::vector<CollisionVolume*>	allColliders;
 		private:
 			const float SLOWDOWN_FACOTR = 0.99999999f;
 		};

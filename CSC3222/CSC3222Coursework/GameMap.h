@@ -37,7 +37,7 @@ namespace NCL {
 
 		class GameMap	{
 		public:
-			GameMap(const std::string& filename, std::vector<SimObject*>& objects, TextureManager& texManager);
+			GameMap(const std::string& filename, std::vector<RigidBody*>& objects, TextureManager& texManager);
 			~GameMap();
 
 			void DrawMap(GameSimsRenderer & r);

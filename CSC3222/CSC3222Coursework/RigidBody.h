@@ -1,5 +1,6 @@
 #pragma once
 #include "../../Common/Vector2.h"
+#include "CollisionVolume.h"
 
 namespace NCL {
 	using namespace Maths;
@@ -10,7 +11,16 @@ namespace NCL {
 			RigidBody();
 			virtual ~RigidBody();
 
-			Vector2 GetPosition() const {
+
+            void SetCollider(CollisionVolume * c) {
+                collider = c;
+            }
+
+            CollisionVolume* GetCollider() const {
+                return collider;
+            }
+
+            Vector2 GetPosition() const {
 				return position;
 			}
 
@@ -30,8 +40,9 @@ namespace NCL {
 				force += newForce;
 			}
 
-
 		protected:
+            CollisionVolume* collider;
+
 			Vector2 position;
 			Vector2 velocity;
 			Vector2 force;
@@ -39,7 +50,7 @@ namespace NCL {
 			float inverseMass;
 			float elasticity;
 
-
-		};
+            virtual void OnCollision(RigidBody* otherBody) = 0;
+        };
 	}
 }

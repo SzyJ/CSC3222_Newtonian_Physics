@@ -20,3 +20,7 @@ void SimObject::InitObjects(RobotRescueGame* game, TextureManager* texManager) {
 	SimObject::game			= game;
 	SimObject::texManager	= texManager;
 }
+
+void SimObject::OnCollision(RigidBody* otherBody) {
+    // TODO: Do Collision Resolution
+}
