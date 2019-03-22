@@ -64,6 +64,8 @@ add_executable(CSC3222_Codebase
         Common/Window.h
         CSC3222/CSC3222Coursework/CollectableRobot.cpp
         CSC3222/CSC3222Coursework/CollectableRobot.h
+        CSC3222/CSC3222Coursework/CollisionResolution.h
+        CSC3222/CSC3222Coursework/CollisionResolution.cpp
         CSC3222/CSC3222Coursework/CollisionVolume.cpp
         CSC3222/CSC3222Coursework/CollisionVolume.h
         CSC3222/CSC3222Coursework/CSC3222.cpp
