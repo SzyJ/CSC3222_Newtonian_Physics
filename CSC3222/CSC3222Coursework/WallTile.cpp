@@ -5,8 +5,11 @@
 using namespace NCL;
 using namespace CSC3222;
 
-WallTile::WallTile(Vector2* pos) : RigidBody() {
-    SetCollider(new CollisionVolume(Shape::Square, 16.0f, pos));
+WallTile::WallTile(float x, float y) : RigidBody() {
+    position.x = x;
+    position.y = y;
+    SetCollider(new CollisionVolume(Shape::Square, 16.0f, &position));
+    makeStatic();
 }
 
 WallTile::~WallTile() {}

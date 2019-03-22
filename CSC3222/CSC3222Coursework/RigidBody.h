@@ -40,6 +40,18 @@ namespace NCL {
 				force += newForce;
 			}
 
+			void makeStatic() {
+                isStaticObj = true;
+            }
+
+            void makeDynamic() {
+                isStaticObj = false;
+            }
+
+            bool isStatic() {
+                return isStaticObj;
+            }
+
 		protected:
             CollisionVolume* collider;
 
@@ -51,6 +63,9 @@ namespace NCL {
 			float elasticity;
 
             virtual void OnCollision(RigidBody* otherBody) = 0;
+
+		private:
+		    bool isStaticObj = false;
         };
 	}
 }

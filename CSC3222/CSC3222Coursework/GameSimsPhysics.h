@@ -28,9 +28,11 @@ namespace NCL {
 			void Integration(float dt);
 			void CollisionDetection(float dt);
 
-			std::vector<RigidBody*>			allBodies;
+            std::vector<RigidBody*> dynamicBodies;
+            std::vector<RigidBody*> staticBodies;
+
 		private:
-			const float SLOWDOWN_FACOTR = 0.99999999f;
+			const float SLOWDOWN_FACTOR = 0.99999999f;
 		};
 	}
 }

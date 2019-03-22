@@ -14,6 +14,8 @@ namespace NCL {
 			const float width;
 			const NCL::Maths::Vector2* position;
 
+			void* onCollision;
+
 			const float X_OFFSET;
             const float Y_OFFSET;
 

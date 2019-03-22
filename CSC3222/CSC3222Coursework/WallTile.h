@@ -6,7 +6,7 @@ namespace NCL {
     namespace CSC3222 {
         class WallTile : public RigidBody {
         public:
-            WallTile(Vector2* pos);
+            WallTile(float x, float y);
             ~WallTile();
 
         protected:

@@ -62,7 +62,7 @@ GameMap::GameMap(const std::string& filename, std::vector<RigidBody*>& objects, 
 			mapFile >> type;
 
 			if (type == WALL_TILE) {
-				WallTile* test = new WallTile(new Vector2(x * TILE_WIDTH, y * TILE_WIDTH));
+				WallTile* test = new WallTile(x * TILE_WIDTH, y * TILE_WIDTH);
 			    objects.emplace_back(test);
 			}
 			mapData[tileIndex] = (MapTileType)(type - 48);

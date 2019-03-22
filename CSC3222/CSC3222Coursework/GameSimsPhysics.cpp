@@ -22,45 +22,70 @@ void GameSimsPhysics::Update(float dt) {
 }
 
 void GameSimsPhysics::AddRigidBody(RigidBody* b) {
-	allBodies.emplace_back(b);
+	if (b->isStatic()) {
+	    staticBodies.emplace_back(b);
+	} else {
+	    dynamicBodies.emplace_back(b);
+	}
 }
 
 void GameSimsPhysics::RemoveRigidBody(RigidBody* b) {
-	auto at = std::find(allBodies.begin(), allBodies.end(), b);
+	if (b->isStatic()) {
+        auto at = std::find(staticBodies.begin(), staticBodies.end(), b);
 
-	if (at != allBodies.end()) {
-		//maybe delete too?
-		// delete b; ??
-		allBodies.erase(at);
+        if (at != staticBodies.end()) {
+            //maybe delete too?
+            // delete b; ??
+            staticBodies.erase(at);
+        }
+	} else {
+        auto at = std::find(dynamicBodies.begin(), dynamicBodies.end(), b);
+
+        if (at != dynamicBodies.end()) {
+            //maybe delete too?
+            // delete b; ??
+            dynamicBodies.erase(at);
+        }
 	}
 }
 
 void GameSimsPhysics::Integration(float dt) {
-	for (RigidBody* body : allBodies) {
+	for (RigidBody* body : dynamicBodies) {
 		Vector2 accel = body->force * body->inverseMass;
-		body->velocity += accel * dt * SLOWDOWN_FACOTR;
+		body->velocity += accel * dt * SLOWDOWN_FACTOR;
 		body->position += body->velocity * dt;
-
 	}
 }
 
 void GameSimsPhysics::CollisionDetection(float dt) {
-	for (int i = 0; i < allBodies.size(); ++i) {
-        RigidBody* body1 = allBodies[i];
-        CollisionVolume* body1Collider = body1->GetCollider();
+	int dynamicBodyCount = dynamicBodies.size();
 
-		for (int j = i + 1; j < allBodies.size(); ++j) {
-            RigidBody* body2 = allBodies[j];
-            CollisionVolume* body2Collider = body2->GetCollider();
+	for (int thisIndex = 0; thisIndex < dynamicBodyCount; ++thisIndex) {
+		RigidBody* body1 = dynamicBodies[thisIndex];
+		CollisionVolume* body1Collider = body1->GetCollider();
 
-            if (body1Collider->collidesWith(body2Collider)) {
+		for (int otherIndex = thisIndex + 1; otherIndex < dynamicBodyCount; ++otherIndex) {
+			RigidBody* body2 = dynamicBodies[otherIndex];
+			CollisionVolume* body2Collider = body2->GetCollider();
 
+			if (body1Collider->collidesWith(body2Collider)) {
 				body1->OnCollision(body2);
 				body2->OnCollision(body1);
 
-				r->DrawString("X", allBodies[i]->GetPosition());
-				//std::cout << "Hit (" << std::to_string(allColliders[i]->getShape()) << ", " << std::to_string(allColliders[j]->getShape()) << ")" << std::endl;
+				r->DrawString("X", body1->GetPosition());
 			}
 		}
+
+		for (RigidBody*  body2 : staticBodies) {
+			CollisionVolume* body2Collider = body2->GetCollider();
+
+			if (body1Collider->collidesWith(body2Collider)) {
+				body1->OnCollision(body2);
+				body2->OnCollision(body1);
+
+				r->DrawString("X", body1->GetPosition());
+			}
+		}
+
 	}
 }
