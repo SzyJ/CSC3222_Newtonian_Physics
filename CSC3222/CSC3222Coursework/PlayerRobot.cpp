@@ -57,6 +57,7 @@ bool PlayerRobot::UpdateObject(float dt) {
 	newVelocity *= testSpeed * dt;
 
 	position += newVelocity;
+	//force = newVelocity;
 
 	if (Window::GetKeyboard()->KeyPressed(KEYBOARD_SPACE)) {
 		Vector2 laserSpeed = newVelocity * 150.0f;

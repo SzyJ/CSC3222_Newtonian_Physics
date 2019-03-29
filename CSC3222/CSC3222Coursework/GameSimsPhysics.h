@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "../../Common/Vector2.h"
+#include "CollisionResolution.h"
 #include "GameSimsRenderer.h"
 
 namespace NCL {
@@ -33,6 +34,8 @@ namespace NCL {
 
 		private:
 			const float SLOWDOWN_FACTOR = 0.99999999f;
+
+			void handleCollision(RigidBody* body1, RigidBody* body2, const CollisionResolution& collision);
 		};
 	}
 }

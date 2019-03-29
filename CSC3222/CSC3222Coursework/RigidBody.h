@@ -28,6 +28,10 @@ namespace NCL {
 				position = newPosition;
 			}
 
+			void ChangePosition(const Vector2& diffPosition) {
+				position += diffPosition;
+			}
+
 			Vector2 GetVelocity() const {
 				return velocity;
 			}

@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CollectableRobot.cpp" />
+    <ClCompile Include="CollisionResolution.cpp" />
     <ClCompile Include="CollisionVolume.cpp" />
     <ClCompile Include="CSC3222.cpp" />
     <ClCompile Include="EnemyRobot.cpp" />
@@ -158,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollectableRobot.h" />
+    <ClInclude Include="CollisionResolution.h" />
     <ClInclude Include="CollisionVolume.h" />
     <ClInclude Include="EnemyRobot.h" />
     <ClInclude Include="GameMap.h" />

@@ -74,6 +74,31 @@ bool CollisionVolume::squareSquareCollision(const CollisionVolume& thisSquare, c
            (abs(otherSquareY - thisSquareY) * 2 < (otherSquareWidth + thisSquareWidth));
 }
 
+CollisionResolution  CollisionVolume::testCCCol(const CollisionVolume& thisCircle, const CollisionVolume& otherCircle) {
+	float thisCircleWidth = thisCircle.getWidth();
+	float thisCircleR = thisCircleWidth * 0.5f;
+	float thisCircleX = thisCircle.getPosition()->x + thisCircle.getXOffset() + thisCircleR;
+	float thisCircleY = thisCircle.getPosition()->y + thisCircle.getYOffset() + thisCircleR;
+
+	float otherCircleWidth = otherCircle.getWidth();
+	float otherCircleR = otherCircleWidth * 0.5f;
+	float otherCircleX = otherCircle.getPosition()->x + otherCircle.getXOffset() + otherCircleR;
+	float otherCircleY = otherCircle.getPosition()->y + otherCircle.getYOffset() + otherCircleR;
+
+	float distanceDiff = sqrt(
+		pow(abs(otherCircleX - thisCircleX), 2) +
+		pow(abs(otherCircleY - thisCircleY), 2));
+
+	bool colides = distanceDiff < (otherCircleR + thisCircleR);
+
+	float pen = (thisCircleR + otherCircleR) - distanceDiff;
+	NCL::Maths::Vector2 normal(thisCircleX - otherCircleX, thisCircleY - otherCircleY);
+	normal.normalize();
+
+	return CollisionResolution(pen, normal);
+
+}
+
 bool CollisionVolume::collidesWith(const CollisionVolume* other) {
     Shape otherShape = other->getShape();
 
@@ -88,6 +113,25 @@ bool CollisionVolume::collidesWith(const CollisionVolume* other) {
     }
 
 	return false;
+}
+
+CollisionResolution CollisionVolume::collidesWithTest(const CollisionVolume* other) {
+	Shape otherShape = other->getShape();
+
+	if (shape == Shape::Square && otherShape == Shape::Square) {
+		//return squareSquareCollision(*this, *other);
+	}
+	else if (shape == Shape::Circle && otherShape == Shape::Circle) {
+		return testCCCol(*this, *other);
+	}
+	else if (shape == Shape::Circle && otherShape == Shape::Square) {
+		//return squareCircleCollision(*other, *this);
+	}
+	else if (shape == Shape::Square && otherShape == Shape::Circle) {
+		//return squareCircleCollision(*this, *other);
+	}
+
+	return CollisionResolution(0, NCL::Maths::Vector2(0, 0));
 }
 
 const Shape CollisionVolume::getShape() const {
