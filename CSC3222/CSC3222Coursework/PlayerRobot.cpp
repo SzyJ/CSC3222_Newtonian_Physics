@@ -31,12 +31,13 @@ bool PlayerRobot::UpdateObject(float dt) {
 		UpdateAnimFrame(dt);
 
 		newVelocity.x = -1.0f;
-	}
-	if (Window::GetKeyboard()->KeyDown(KEYBOARD_D)) {
+	} else if (Window::GetKeyboard()->KeyDown(KEYBOARD_D)) {
 		currentAnimDir = MovementDir::Right;
 		UpdateAnimFrame(dt);
 
 		newVelocity.x = 1.0f;
+	} else {
+		newVelocity.x = 0.0f;
 	}
 
 	if (Window::GetKeyboard()->KeyDown(KEYBOARD_W)) {
@@ -44,19 +45,21 @@ bool PlayerRobot::UpdateObject(float dt) {
 		UpdateAnimFrame(dt);	
 
 		newVelocity.y = -1.0f;
-	}
-	if (Window::GetKeyboard()->KeyDown(KEYBOARD_S)) {
+	} else if (Window::GetKeyboard()->KeyDown(KEYBOARD_S)) {
 		currentAnimDir = MovementDir::Down;
 		UpdateAnimFrame(dt);
 
 		newVelocity.y = 1.0f;
+	} else {
+		newVelocity.y = 0.0f;
 	}
 
 	// Set speed
 	newVelocity.normalize();
 	newVelocity *= testSpeed * dt;
 
-	position += newVelocity;
+	//position += newVelocity;
+	velocity += newVelocity;
 	//force = newVelocity;
 
 	if (Window::GetKeyboard()->KeyPressed(KEYBOARD_SPACE)) {

@@ -96,8 +96,25 @@ void GameSimsPhysics::handleCollision(RigidBody* body1, RigidBody* body2, const 
 	float body2Mass = body2->inverseMass;
 	float totalMass = body1Mass + body2Mass;
 
-	NCL::Maths::Vector2 posChangeVector = collision.getNormal() * collision.getPenetration();
+	NCL::Maths::Vector2 normal = collision.getNormal();
+
+	NCL::Maths::Vector2 posChangeVector = normal * collision.getPenetration();
 
 	body1->ChangePosition(posChangeVector * (body1Mass / totalMass));
 	body2->ChangePosition(posChangeVector * -1 * (body2Mass / totalMass));
+
+	float body1E = body1->getElasticty();
+	float body2E = body2->getElasticty();
+	
+	NCL::Maths::Vector2 body1Velocity = body1->GetVelocity();
+	NCL::Maths::Vector2 body2Velocity = body2->GetVelocity();
+	float body1VelDotProduct = body1Velocity.dot(normal);
+	float body2VelDotProduct = body2Velocity.dot(normal);
+	NCL::Maths::Vector2 body1ReflectedVelocity = body1Velocity - (normal * (2.0f * body1VelDotProduct));
+	NCL::Maths::Vector2 body2ReflectedVelocity = body2Velocity - (normal * (2.0f * body2VelDotProduct));
+	body1->SetVelocity(body1ReflectedVelocity * body1E);
+	body2->SetVelocity(body2ReflectedVelocity * body1E);
+
+
+
 }

@@ -56,7 +56,7 @@ void Laser::DrawObject(GameSimsRenderer &r) {
 	Vector2 texPos;
 	Vector2 texSize = Vector2(16, 16);
 
-	float radAngle = FIRE_DIR.getAngle();
+	float radAngle = velocity.getAngle();
 	radAngle += PI;
 	radAngle *= 16.0f / (2 * PI);
 

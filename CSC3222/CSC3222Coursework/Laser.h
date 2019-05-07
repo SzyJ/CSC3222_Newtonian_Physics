@@ -6,9 +6,10 @@ namespace NCL {
 		class Laser : public SimObject {
 		private:
 		    Vector2 FIRE_DIR;
-		    const float INITIAL_VELOCITY = 100.0f;
-			const float FIRE_FORCE = 250.0f;
+		    const float INITIAL_VELOCITY =200.0f;
+			const float FIRE_FORCE = 0.0f;
 			const float MASS = 1.0f;
+			 
 
 			float test = 0.0f;
 

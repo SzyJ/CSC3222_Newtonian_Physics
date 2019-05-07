@@ -100,6 +100,11 @@ namespace NCL {
 			    return copy;
 			}
 
+			// Dot product operator
+			inline float dot(Vector2 vector) const {
+				return (x * vector.x) + (y * vector.y);
+			};
+
 			inline friend std::ostream& operator<<(std::ostream& o, const Vector2& v) {
 				o << "Vector2(" << v.x << "," << v.y << ")";
 				return o;
@@ -121,7 +126,7 @@ namespace NCL {
 				return Vector2(x / a.x, y / a.y);
 			};
 
-			inline Vector2  operator*(float f) const {
+			inline Vector2 operator*(float f) const {
 				return Vector2(x * f, y * f);
 			};
 

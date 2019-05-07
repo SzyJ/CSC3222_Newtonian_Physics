@@ -139,7 +139,6 @@ CollisionResolution CollisionVolume::testSCCol(const CollisionVolume& shape1, co
 		return CollisionResolution::noCollision();
 	}
 	
-
 	float edgeXDelta = closestSquareEdgeX - circleX;
 	float edgeYDelta = closestSquareEdgeY - circleY;
 
@@ -179,9 +178,6 @@ CollisionResolution CollisionVolume::testSSCol(const CollisionVolume& thisSquare
 		std::abs(thisSquareUpperY - otherSquareLowerY),
 		std::abs(thisSquareLowerY - otherSquareUpperY)
 		);
-
-
-
 
 	return CollisionResolution::noCollision();
 }
