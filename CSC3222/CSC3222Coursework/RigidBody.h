@@ -39,6 +39,11 @@ namespace NCL {
 			void SetVelocity(const Vector2& newVelocity) {
 				velocity = newVelocity;
 			}
+			
+			void SetVelocity(const float xVal, const float yVal) {
+				velocity.x = xVal;
+				velocity.y = yVal;
+			}
 
 			void AddForce(const Vector2& newForce) {
 				force += newForce;
@@ -55,6 +60,11 @@ namespace NCL {
             bool isStatic() {
                 return isStaticObj;
             }
+
+			float getElasticty() {
+				return elasticity;
+			}
+
 
 		protected:
             CollisionVolume* collider;

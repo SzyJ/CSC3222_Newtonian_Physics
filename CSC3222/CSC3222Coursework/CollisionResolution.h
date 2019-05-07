@@ -11,7 +11,7 @@ namespace NCL {
 			CollisionResolution(float pen, NCL::Maths::Vector2 normal)
 				: penetration(pen), collisionNormal(normal) {}
 
-			static CollisionResolution NoCollision() {
+			static CollisionResolution noCollision() {
 				return CollisionResolution(0, NCL::Maths::Vector2(0, 0));
 			}
 
@@ -20,6 +20,8 @@ namespace NCL {
 
 			void setPenetration(float newPen);
 			float getPenetration() const;
+
+			bool hasCollided();
 		};
 	}
 }

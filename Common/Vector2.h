@@ -101,7 +101,7 @@ namespace NCL {
 			}
 
 			inline friend std::ostream& operator<<(std::ostream& o, const Vector2& v) {
-				o << "Vector2(" << v.x << "," << v.y << ")" << std::endl;
+				o << "Vector2(" << v.x << "," << v.y << ")";
 				return o;
 			}
 

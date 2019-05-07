@@ -18,3 +18,7 @@ void CollisionResolution::setPenetration(float newPen) {
 float CollisionResolution::getPenetration() const {
 	return penetration;
 }
+
+bool  CollisionResolution::hasCollided() {
+	return penetration <= 0;
+}

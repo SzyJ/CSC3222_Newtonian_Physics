@@ -9,7 +9,7 @@ WallTile::WallTile(float x, float y) : RigidBody() {
     position.x = x;
     position.y = y;
 	inverseMass = 0;
-    SetCollider(new CollisionVolume(Shape::Circle, 16.0f, &position));
+    SetCollider(new CollisionVolume(Shape::Square, 16.0f, &position));
     makeStatic();
 }
 

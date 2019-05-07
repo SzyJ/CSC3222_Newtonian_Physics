@@ -74,7 +74,7 @@ void GameSimsPhysics::CollisionDetection(float dt) {
 			}
 		}
 
-		for (RigidBody*  body2 : staticBodies) {
+		for (RigidBody* body2 : staticBodies) {
 			CollisionVolume* body2Collider = body2->GetCollider();
 			CollisionResolution collider = body1Collider->collidesWithTest(body2Collider);
 			
@@ -91,9 +91,12 @@ void GameSimsPhysics::handleCollision(RigidBody* body1, RigidBody* body2, const 
 	body2->OnCollision(body1);
 
 	r->DrawString("X", body1->GetPosition());
-		float body1Mass = body1->inverseMass;	float body2Mass = body2->inverseMass;	float totalMass = body1Mass + body2Mass;
+	
+	float body1Mass = body1->inverseMass;
+	float body2Mass = body2->inverseMass;
+	float totalMass = body1Mass + body2Mass;
 
-	NCL::Maths::Vector2 posChangeVector = collision.getNormal() + collision.getPenetration();
+	NCL::Maths::Vector2 posChangeVector = collision.getNormal() * collision.getPenetration();
 
 	body1->ChangePosition(posChangeVector * (body1Mass / totalMass));
 	body2->ChangePosition(posChangeVector * -1 * (body2Mass / totalMass));
