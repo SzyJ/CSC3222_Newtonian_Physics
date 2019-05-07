@@ -72,6 +72,15 @@
     <ClCompile Include="CollisionResolution.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Pathing.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MapNode.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Pathing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameMap.h">

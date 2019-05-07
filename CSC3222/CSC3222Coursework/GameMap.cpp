@@ -5,6 +5,7 @@
 #include "../../Common/TextureLoader.h"
 #include "CollisionVolume.h"
 #include "WallTile.h"
+#include "MapNode.h"
 #include <fstream>
 #include <iostream>
 
@@ -34,7 +35,6 @@ Vector4 buildingTypes[4] = {
 	Vector4(144,256,64,64)  //Robot Home
 };
 
-
 GameMap::GameMap(const std::string& filename, std::vector<RigidBody*>& objects, TextureManager& texManager) {
 	tileTexture = texManager.GetTexture("Colony.png");
 
@@ -47,6 +47,8 @@ GameMap::GameMap(const std::string& filename, std::vector<RigidBody*>& objects, 
 
 	mapFile >> mapWidth;
 	mapFile >> mapHeight;
+
+	MapNode* nodeArray = new MapNode[mapWidth * mapHeight];
 
 	mapData = new MapTileType[mapWidth * mapHeight];
 
@@ -106,8 +108,7 @@ void GameMap::DrawMap(GameSimsRenderer & r) {
 			if (tileType == MapTileType::Rough) {
 				int randomFlatTile = rand() % 4;
 				tileData = randomRoughTiles[randomFlatTile];
-			}
-			else {
+			} else {
 				tileData = tileSpecs[tileType];
 			}
 

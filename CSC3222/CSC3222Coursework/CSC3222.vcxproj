@@ -149,11 +149,14 @@
     <ClCompile Include="GameSimsPhysics.cpp" />
     <ClCompile Include="GameSimsRenderer.cpp" />
     <ClCompile Include="Laser.cpp" />
+    <ClCompile Include="Pathing.cpp" />
     <ClCompile Include="PlayerRobot.cpp" />
     <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="Robot.cpp" />
     <ClCompile Include="RobotRescueGame.cpp" />
     <ClCompile Include="SimObject.cpp" />
+    <ClCompile Include="MapNode.h" />
+    <ClCompile Include="Pathing.h" />
     <ClCompile Include="WallTile.cpp" />
     <ClCompile Include="TextureManager.cpp" />
   </ItemGroup>
