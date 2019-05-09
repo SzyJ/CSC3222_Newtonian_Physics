@@ -24,8 +24,8 @@ namespace NCL {
 			static bool circleCircleCollision(const CollisionVolume& thisCircle, const CollisionVolume& otherCircle);
 			static bool squareSquareCollision(const CollisionVolume& thisSquare, const CollisionVolume& otherSquare);
 
-			static CollisionResolution testCCCol(const CollisionVolume& thisCircle, const CollisionVolume& otherCircle);
-			static CollisionResolution testSCCol(const CollisionVolume& square, const CollisionVolume& circle);
+			static CollisionResolution collisionResolutionCircleCircle(const CollisionVolume& thisCircle, const CollisionVolume& otherCircle);
+			static CollisionResolution collisionResolutionSquareCircle(const CollisionVolume& square, const CollisionVolume& circle);
 			static CollisionResolution testSSCol(const CollisionVolume& thisSquare, const CollisionVolume& otherSquare);
 
 			static float clamp(float val, float lowerCompare, float upperCompare) {
@@ -45,8 +45,8 @@ namespace NCL {
 			CollisionVolume(Shape shape, float width, NCL::Maths::Vector2* pos, float xOffset = 0, float yOffset = 0);
 			~CollisionVolume();
 
-			bool collidesWith(const CollisionVolume* other);
-			CollisionResolution collidesWithTest(const CollisionVolume* other);
+			bool collidesWithSimple(const CollisionVolume* other);
+			CollisionResolution collidesWith(const CollisionVolume* other);
 
 			const Shape getShape() const;
 			const float getWidth() const;

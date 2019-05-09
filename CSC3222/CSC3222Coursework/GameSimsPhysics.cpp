@@ -67,18 +67,18 @@ void GameSimsPhysics::CollisionDetection(float dt) {
 		for (int otherIndex = thisIndex + 1; otherIndex < dynamicBodyCount; ++otherIndex) {
 			RigidBody* body2 = dynamicBodies[otherIndex];
 			CollisionVolume* body2Collider = body2->GetCollider();
-			CollisionResolution collider = body1Collider->collidesWithTest(body2Collider);
+			CollisionResolution collider = body1Collider->collidesWith(body2Collider);
 
-			if (body1Collider->collidesWith(body2Collider)) {
+			if (collider.hasCollided()) {
 				handleCollision(body1, body2, collider);
 			}
 		}
 
 		for (RigidBody* body2 : staticBodies) {
 			CollisionVolume* body2Collider = body2->GetCollider();
-			CollisionResolution collider = body1Collider->collidesWithTest(body2Collider);
+			CollisionResolution collider = body1Collider->collidesWith(body2Collider);
 			
-			if (body1Collider->collidesWith(body2Collider)) {
+			if (collider.hasCollided()) {
 				handleCollision(body1, body2, collider);
 			}
 		}
@@ -89,7 +89,7 @@ void GameSimsPhysics::handleCollision(RigidBody* body1, RigidBody* body2, const 
 	body1->OnCollision(body2);
 	body2->OnCollision(body1);
 
-	r->DrawString("X", body1->GetPosition());
+	//r->DrawString("X", body1->GetPosition());
 	
 	float body1Mass = body1->inverseMass;
 	float body2Mass = body2->inverseMass;
@@ -104,21 +104,21 @@ void GameSimsPhysics::handleCollision(RigidBody* body1, RigidBody* body2, const 
 
 	float body1E = body1->getElasticty();
 	float body2E = body2->getElasticty();
-	
+	float elasticity = (std::min)(body1E, body2E);
+
 	NCL::Maths::Vector2 body1Velocity = body1->GetVelocity();
 	NCL::Maths::Vector2 body2Velocity = body2->GetVelocity();
+	NCL::Maths::Vector2 totalVel = body1Velocity + body2Velocity;
+
+	body1Velocity = totalVel * (body1Mass / totalMass);
+	body2Velocity = totalVel * (body2Mass / totalMass);
 
 	float body1VelDotProduct = body1Velocity.dot(normal);
-	float body2VelDotProduct = body2Velocity.dot(normal);
+	float body2VelDotProduct = body2Velocity.dot(normal * -1.0f);
 	
-	std::cout << "vel1 dot norml: " << body1VelDotProduct << std::endl;
-	std::cout << "vel2 dot norml: " << body2VelDotProduct << std::endl;
-
 	NCL::Maths::Vector2 body1ReflectedVelocity = body1Velocity - (normal * (2.0f * body1VelDotProduct));
-	NCL::Maths::Vector2 body2ReflectedVelocity = body2Velocity - (normal * (2.0f * body2VelDotProduct));
+	NCL::Maths::Vector2 body2ReflectedVelocity = body2Velocity - (normal * (-2.0f * body2VelDotProduct));
+	
 	body1->SetVelocity(body1ReflectedVelocity * body1E);
 	body2->SetVelocity(body2ReflectedVelocity * body2E);
-
-
-
 }

@@ -19,7 +19,7 @@ Vector4 spriteDetails[5] = {
 
 CollectableRobot::CollectableRobot() : SimObject()	{
 	collected = false;
-
+	inverseMass = 1.0f / 0.5f;
 	int r = rand() % 5;
 	type = (RobotType)r;
 
@@ -30,7 +30,7 @@ CollectableRobot::CollectableRobot() : SimObject()	{
 		texture = texManager->GetTexture("Gum Bot Sprites.png");
 	}
 
-	SetCollider(new CollisionVolume(Shape::Square, 16.0f, &position, 0, 2));
+	SetCollider(new CollisionVolume(Shape::Circle, 16.0f, &position, 0, 2));
 }
 
 CollectableRobot::CollectableRobot(RobotType type) : CollectableRobot() {
@@ -49,7 +49,7 @@ void CollectableRobot::DrawObject(GameSimsRenderer &r) {
 
 	r.DrawTextureArea((OGLTexture*)texture, texPos, texSize, screenPos, false);
 
-	r.DrawString("c", Vector2(screenPos.x + 8, screenPos.y + 8 + 2));
+	//r.DrawString("c", Vector2(screenPos.x + 8, screenPos.y + 8 + 2));
 }
 
 bool CollectableRobot::UpdateObject(float dt) {

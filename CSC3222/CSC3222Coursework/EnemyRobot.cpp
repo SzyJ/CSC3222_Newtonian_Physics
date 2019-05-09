@@ -9,7 +9,7 @@ using namespace Rendering;
 
 EnemyRobot::EnemyRobot() : Robot()	{
 	texture = texManager->GetTexture("Turret Bot overgrown.png");
-
+	inverseMass = 1.0f / 1.0f;
 	moving = false;
 
 	SetCollider(new CollisionVolume(Shape::Circle, 16.0f, &position, COLLISION_X_OFFSET, COLLISION_Y_OFFSET));

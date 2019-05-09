@@ -20,5 +20,5 @@ float CollisionResolution::getPenetration() const {
 }
 
 bool  CollisionResolution::hasCollided() {
-	return penetration <= 0;
+	return penetration > 0;
 }

@@ -13,7 +13,7 @@ PlayerRobot::PlayerRobot() : Robot()	{
 	texture = texManager->GetTexture("Turret Bot.png");
 
 	position = Vector2(32, 32);
-
+	inverseMass = 1.0f / 5.0f;
 	SetCollider(new CollisionVolume(Shape::Circle, 16.0f, &position, COLLISION_X_OFFSET, COLLISION_Y_OFFSET));
 }
 
@@ -61,8 +61,8 @@ bool PlayerRobot::UpdateObject(float dt) {
 	newVelocity.normalize();
 	newVelocity *= testSpeed * dt;
 
-	position += newVelocity;
-	//velocity += newVelocity;
+	//position += newVelocity;
+	velocity = newVelocity * 50;
 	//force = newVelocity;
 
 	if (Window::GetKeyboard()->KeyPressed(KEYBOARD_SPACE)) {

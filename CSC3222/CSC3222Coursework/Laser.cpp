@@ -70,7 +70,7 @@ void Laser::DrawObject(GameSimsRenderer &r) {
 
 	r.DrawTextureArea((OGLTexture*)texture, texPos, texSize, screenPos);
 
-	r.DrawString(".", Vector2(screenPos.x + 4.0f, screenPos.y + 4.0f));
+	//r.DrawString(".", Vector2(screenPos.x + 4.0f, screenPos.y + 4.0f));
 }
 
 bool Laser::UpdateObject(float dt) {

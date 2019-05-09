@@ -93,9 +93,8 @@ std::vector<MapNode*> Pathing::getNeighbouringNodes(int tileX, int tileY, int de
 
 MapNode* Pathing::getTargetTile(MapNode* endNode) {
 	MapNode* previousNode = nullptr;
-	std::cout << endNode->x << "," << endNode->y << " >>  " << std::endl;
 	for (MapNode* node = endNode; node->bestParent != nullptr; node = node->bestParent) {
-		std::cout << node->x << "," << node->y << " >>  " << std::endl;
+		//std::cout << node->x << "," << node->y << " >>  " << std::endl;
 		previousNode = node;
 	}
 
@@ -157,21 +156,21 @@ NCL::Maths::Vector2 Pathing::getDirection(float sourceXPos, float sourceYPos, fl
 	startNode->updateHeuristic(endX, endY);
 	endNode->updateHeuristic(endX, endY);
 
-	std::cout << "Node: " << startNode->x << "," << startNode->y << "[g=" << startNode->g << "][h=" << startNode->h << "]" << std::endl;
+	//std::cout << "Node: " << startNode->x << "," << startNode->y << "[g=" << startNode->g << "][h=" << startNode->h << "]" << std::endl;
 
 	openList.push_back(startNode);
 
 	while (!openList.empty()) {
 		MapNode* bestNode = getBestNode(&openList);
-		std::cout << "Best Node: " << bestNode->x << "," << bestNode->y << "[g=" << bestNode->g << "][h=" << bestNode->h << "]" << std::endl;
+		//std::cout << "Best Node: " << bestNode->x << "," << bestNode->y << "[g=" << bestNode->g << "][h=" << bestNode->h << "]" << std::endl;
 
 		if (bestNode == endNode) {
-			std::cout << "Best route found!" << std::endl;
+			//std::cout << "Best route found!" << std::endl;
 			break;
 		}
 
 		for (MapNode* node : getNeighbouringNodes(bestNode->x, bestNode->y, endX, endY)) {
-			std::cout << "Node: " << node->x << "," << node->y << "[g=" << node->g << "][h=" << node->h << "]" << std::endl;
+			//std::cout << "Node: " << node->x << "," << node->y << "[g=" << node->g << "][h=" << node->h << "]" << std::endl;
 
 			// If not in openlist
 			if (std::find(openList.begin(), openList.end(), node) == openList.end()) {
@@ -181,7 +180,7 @@ NCL::Maths::Vector2 Pathing::getDirection(float sourceXPos, float sourceYPos, fl
 				continue;
 			}
 
-			std::cout << "   if " << node->f() << ">=" << bestNode->f() << "?" << std::endl;
+			//std::cout << "   if " << node->f() << ">=" << bestNode->f() << "?" << std::endl;
 			if (node->f() >= bestNode->f()) {
 				continue;
 			}

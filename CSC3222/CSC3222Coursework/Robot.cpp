@@ -11,6 +11,8 @@ bool flips[]  = { false,false,false,true };
 Robot::Robot() : SimObject()	{
 	currentAnimDir		= Left;
 	currentanimFrame	= 0;
+
+	elasticity = 0.0f;
 }
 
 Robot::~Robot()	{
@@ -31,7 +33,7 @@ void Robot::DrawObject(GameSimsRenderer &r) {
 
 	r.DrawTextureArea((OGLTexture*)texture, texPos, texSize, screenPos, flips[currentAnimDir]);
 
-	r.DrawString("O", Vector2(screenPos.x + 8, screenPos.y + 16 + 8));
+	//r.DrawString("O", Vector2(screenPos.x + 8, screenPos.y + 16 + 8));
 }
 
 void Robot::UpdateAnimFrame(float dt) {

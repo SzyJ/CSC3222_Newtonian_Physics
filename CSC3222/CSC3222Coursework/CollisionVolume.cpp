@@ -75,7 +75,7 @@ bool CollisionVolume::squareSquareCollision(const CollisionVolume& thisSquare, c
            (abs(otherSquareY - thisSquareY) * 2 < (otherSquareWidth + thisSquareWidth));
 }
 
-CollisionResolution  CollisionVolume::testCCCol(const CollisionVolume& thisCircle, const CollisionVolume& otherCircle) {
+CollisionResolution  CollisionVolume::collisionResolutionCircleCircle(const CollisionVolume& thisCircle, const CollisionVolume& otherCircle) {
 	float thisCircleWidth = thisCircle.getWidth();
 	float thisCircleR = thisCircleWidth * 0.5f;
 	float thisCircleX = thisCircle.getPosition()->x + thisCircle.getXOffset() + thisCircleR;
@@ -100,7 +100,7 @@ CollisionResolution  CollisionVolume::testCCCol(const CollisionVolume& thisCircl
 
 }
 
-CollisionResolution CollisionVolume::testSCCol(const CollisionVolume& shape1, const CollisionVolume& shape2) {
+CollisionResolution CollisionVolume::collisionResolutionSquareCircle(const CollisionVolume& shape1, const CollisionVolume& shape2) {
 	const CollisionVolume* square = nullptr;
 	const CollisionVolume* circle = nullptr;
 
@@ -184,7 +184,7 @@ CollisionResolution CollisionVolume::testSSCol(const CollisionVolume& thisSquare
 
 
 
-bool CollisionVolume::collidesWith(const CollisionVolume* other) {
+bool CollisionVolume::collidesWithSimple(const CollisionVolume* other) {
     Shape otherShape = other->getShape();
 
     if (shape == Shape::Square && otherShape == Shape::Square) {
@@ -200,20 +200,20 @@ bool CollisionVolume::collidesWith(const CollisionVolume* other) {
 	return false;
 }
 
-CollisionResolution CollisionVolume::collidesWithTest(const CollisionVolume* other) {
+CollisionResolution CollisionVolume::collidesWith(const CollisionVolume* other) {
 	Shape otherShape = other->getShape();
 
 	if (shape == Shape::Square && otherShape == Shape::Square) {
 		//return squareSquareCollision(*this, *other);
 	}
 	else if (shape == Shape::Circle && otherShape == Shape::Circle) {
-		return testCCCol(*this, *other);
+		return collisionResolutionCircleCircle(*this, *other);
 	}
 	else if (shape == Shape::Circle && otherShape == Shape::Square) {
-		return testSCCol(*other, *this);
+		return collisionResolutionSquareCircle(*other, *this);
 	}
 	else if (shape == Shape::Square && otherShape == Shape::Circle) {
-		return testSCCol(*this, *other);
+		return collisionResolutionSquareCircle(*this, *other);
 	}
 
 	return CollisionResolution::noCollision();

@@ -8,7 +8,7 @@ namespace NCL {
 		    Vector2 FIRE_DIR;
 		    const float INITIAL_VELOCITY =200.0f;
 			const float FIRE_FORCE = 0.0f;
-			const float MASS = 1.0f;
+			const float MASS = 0.003f;
 			 
 
 			float test = 0.0f;
