@@ -35,7 +35,7 @@ Vector4 buildingTypes[4] = {
 	Vector4(144,256,64,64)  //Robot Home
 };
 
-GameMap::GameMap(const std::string& filename, std::vector<RigidBody*>& objects, TextureManager& texManager) {
+GameMap::GameMap(const std::string& filename, std::vector<RigidBody*>& objects, Pathing& pathing, TextureManager& texManager) {
 	tileTexture = texManager.GetTexture("Colony.png");
 
 	std::ifstream mapFile(Assets::DATADIR + filename);
@@ -53,7 +53,10 @@ GameMap::GameMap(const std::string& filename, std::vector<RigidBody*>& objects, 
 	mapData = new MapTileType[mapWidth * mapHeight];
 
 	const int TILE_WIDTH = 16;
-    const char WALL_TILE = '1';
+	const char WALL_TILE = '1';
+	const char ROUGH_TILE = '2';
+	const char FLAT_TILE = '0';
+
 
 	for (int y = 0; y < mapHeight; ++y) {
 		for (int x = 0; x < mapWidth; ++x) {
@@ -63,16 +66,32 @@ GameMap::GameMap(const std::string& filename, std::vector<RigidBody*>& objects, 
 
 			mapFile >> type;
 
-			if (type == WALL_TILE) {
+			nodeArray[tileIndex].x = x;
+			nodeArray[tileIndex].y = y;
+			nodeArray[tileIndex].isTraversable = true;
+			nodeArray[tileIndex].isClosed = false;
+
+			if (type == FLAT_TILE) {
+				nodeArray[tileIndex].cost = 1.0f;
+			} else if (type == ROUGH_TILE) {
+				nodeArray[tileIndex].cost = 1.1f;
+			} else if (type == WALL_TILE) {
 				WallTile* test = new WallTile(x * TILE_WIDTH, y * TILE_WIDTH);
 			    objects.emplace_back(test);
+				nodeArray[tileIndex].cost = 10.0f;
+				nodeArray[tileIndex].isTraversable = false;
+				nodeArray[tileIndex].isClosed = true;
 			}
+
+
 			mapData[tileIndex] = (MapTileType)(type - 48);
 		}
 	}
 	mapFile >> structureCount;
 
 	structureData = new StructureData[structureCount];
+	
+	pathing.setGameMap(nodeArray, mapWidth, mapHeight, TILE_WIDTH);
 
 	for (int i = 0; i < structureCount; ++i) {
 		int type  = 0;

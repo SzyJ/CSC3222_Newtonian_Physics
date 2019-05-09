@@ -18,8 +18,13 @@ EnemyRobot::EnemyRobot() : Robot()	{
 EnemyRobot::~EnemyRobot()	{
 }
 
-void EnableGravity(float delta) {
+void EnemyRobot::setPathing(Pathing path) {
+	this->path = path;
+	this->path.resetMapInstance();
+}
 
+void EnemyRobot::setPlayerPosition(Vector2* playerPos) {
+	playerPosition = playerPos;
 }
 
 bool EnemyRobot::UpdateObject(float dt) {
@@ -37,6 +42,13 @@ bool EnemyRobot::UpdateObject(float dt) {
 
 		float testSpeed = 16;
 
+		
+		Vector2 direction = path.getDirection(position.x, position.y, playerPosition->x, playerPosition->y);
+		direction -= position;
+		direction.normalize();
+		velocity = direction * testSpeed;
+
+		/*
 		int choice = rand() % 5;
 
 		if (choice == 1) {
@@ -61,7 +73,7 @@ bool EnemyRobot::UpdateObject(float dt) {
 			moving = true;
 			velocity.y = testSpeed;
 			currentAnimDir = MovementDir::Down;
-		}
+		}*/
 	}
 
 	return true;

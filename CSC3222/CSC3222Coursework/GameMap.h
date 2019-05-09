@@ -7,6 +7,8 @@
 #include "../../Common/Vector4.h"
 #include "GameSimsPhysics.h"
 
+#include "Pathing.h"
+
 namespace NCL {
 	namespace Rendering {
 		class TextureBase;
@@ -37,7 +39,7 @@ namespace NCL {
 
 		class GameMap	{
 		public:
-			GameMap(const std::string& filename, std::vector<RigidBody*>& objects, TextureManager& texManager);
+			GameMap(const std::string& filename, std::vector<RigidBody*>& objects, Pathing& pathing, TextureManager& texManager);
 			~GameMap();
 
 			void DrawMap(GameSimsRenderer & r);

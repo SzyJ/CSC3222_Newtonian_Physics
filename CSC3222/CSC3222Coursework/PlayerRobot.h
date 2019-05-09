@@ -9,7 +9,7 @@ namespace NCL {
 			~PlayerRobot();
 
 			bool UpdateObject(float dt) override;
+			Vector2* getPlayerPositionVector();
 		};
 	}
 }
-

@@ -21,6 +21,9 @@ PlayerRobot::~PlayerRobot()	{
 
 }
 
+Vector2* PlayerRobot::getPlayerPositionVector() {
+	return &position;
+}
 bool PlayerRobot::UpdateObject(float dt) {
 	float testSpeed = 64;
 
@@ -58,8 +61,8 @@ bool PlayerRobot::UpdateObject(float dt) {
 	newVelocity.normalize();
 	newVelocity *= testSpeed * dt;
 
-	//position += newVelocity;
-	velocity += newVelocity;
+	position += newVelocity;
+	//velocity += newVelocity;
 	//force = newVelocity;
 
 	if (Window::GetKeyboard()->KeyPressed(KEYBOARD_SPACE)) {

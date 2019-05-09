@@ -70,7 +70,8 @@ void RobotRescueGame::InitialiseGame() {
 	gameObjects.clear();
 
 	std::vector<RigidBody*> walls;
-	currentMap = new GameMap("GameSimsRobotMap.txt", walls, *texManager);
+	Pathing path;
+	currentMap = new GameMap("GameSimsRobotMap.txt", walls, path, *texManager);
 
 	for (RigidBody* wall : walls) {
 		physics->AddRigidBody(wall);
@@ -78,13 +79,14 @@ void RobotRescueGame::InitialiseGame() {
 	renderer->SetScreenProperties(16, currentMap->GetMapWidth(), currentMap->GetMapHeight());
 
 	testRobot = new PlayerRobot();
-
 	AddNewObject(testRobot);
 
-	for (int i = 0; i < 10; ++i) {
+	Vector2* playerPos = testRobot->getPlayerPositionVector();
+
+	for (int i = 0; i < 1; ++i) {
 		float randomX = 32.0f + (rand() % 416);
 		float randomY = 32.0f + (rand() % 256);
-		AddEnemyRobot(Vector2(randomX, randomY));
+		AddEnemyRobot(Vector2(randomX, randomY), path, playerPos);
 	}
 
 	for (int i = 0; i < 20; ++i) {
@@ -103,10 +105,12 @@ void RobotRescueGame::AddNewObject(SimObject* object) {
 	physics->AddRigidBody(object);
 }
 
-void RobotRescueGame::AddEnemyRobot(const Vector2& position) {
+void RobotRescueGame::AddEnemyRobot(const Vector2& position, Pathing path, Vector2* playerPos) {
 	EnemyRobot* robot = new EnemyRobot();
 
 	robot->SetPosition(position);
+	robot->setPathing(path);
+	robot->setPlayerPosition(playerPos);
 
 	AddNewObject(robot);
 }

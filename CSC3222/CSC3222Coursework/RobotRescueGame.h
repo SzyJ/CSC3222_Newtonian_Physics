@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "Pathing.h"
 
 
 namespace NCL {
@@ -27,7 +28,7 @@ namespace NCL {
 		protected:
 			void InitialiseGame();
 
-			void AddEnemyRobot(const Maths::Vector2& position);
+			void AddEnemyRobot(const Maths::Vector2& position, Pathing path, Maths::Vector2* playerPos);
 			void AddCollectableRobot(const Maths::Vector2& position);
 
 			TextureManager*		texManager;
