@@ -35,50 +35,54 @@ void Pathing::addAvaliableNodes(std::vector<MapNode*>* openList, int tileX, int 
 std::vector<MapNode*> Pathing::getNeighbouringNodes(int tileX, int tileY, int destX, int destY) {
 	std::vector<MapNode*> neighbourNodes;
 	neighbourNodes.reserve(3);
-	{
+	if (tileX < MAP_WIDTH - 2) {
 		MapNode* neighbour = &gameMap[getTileIndex(tileX + 1, tileY)];
 		if (!neighbour->isClosed && neighbour->isTraversable) {
 			neighbour->updateHeuristic(destX, destY);
 			
 			if (neighbour->bestParent != nullptr) {
-				neighbour->cost += neighbour->bestParent->cost;
+				neighbour->g = neighbour->bestParent->g + neighbour->cost;
 			}
+			neighbour->g = neighbour->cost;
 
 			neighbourNodes.push_back(neighbour);
 		}
 	}
-	{
+	if (tileX > 0) {
 		MapNode* neighbour = &gameMap[getTileIndex(tileX - 1, tileY)];
 		if (!neighbour->isClosed && neighbour->isTraversable) {
 			neighbour->updateHeuristic(destX, destY);
 
 			if (neighbour->bestParent != nullptr) {
-				neighbour->cost += neighbour->bestParent->cost;
+				neighbour->g = neighbour->bestParent->g + neighbour->cost;
 			}
+			neighbour->g = neighbour->cost;
 
 			neighbourNodes.push_back(neighbour);
 		}
 	}
-	{
+	if (tileX < MAP_WIDTH - 2) {
 		MapNode* neighbour = &gameMap[getTileIndex(tileX, tileY + 1)];
 		if (!neighbour->isClosed && neighbour->isTraversable) {
 			neighbour->updateHeuristic(destX, destY);
 
 			if (neighbour->bestParent != nullptr) {
-				neighbour->cost += neighbour->bestParent->cost;
+				neighbour->g = neighbour->bestParent->g + neighbour->cost;
 			}
+			neighbour->g = neighbour->cost;
 
 			neighbourNodes.push_back(neighbour);
 		}
 	}
-	{
+	if (tileX > 0) {
 		MapNode* neighbour = &gameMap[getTileIndex(tileX, tileY - 1)];
 		if (!neighbour->isClosed && neighbour->isTraversable) {
 			neighbour->updateHeuristic(destX, destY);
 
 			if (neighbour->bestParent != nullptr) {
-				neighbour->cost += neighbour->bestParent->cost;
+				neighbour->g = neighbour->bestParent->g + neighbour->cost;
 			}
+			neighbour->g = neighbour->cost;
 
 			neighbourNodes.push_back(neighbour);
 		}
@@ -100,13 +104,13 @@ MapNode* Pathing::getTargetTile(MapNode* endNode) {
 
 
 MapNode* Pathing::getBestNode(std::vector<MapNode*>* openList) {
-	float bestFValue = -1.0f;
+	float bestFValue = std::numeric_limits<float>::infinity();
 	MapNode* bestNode = nullptr;
 
 	for (MapNode* node : *openList) {
 		float newF = node->f();
 
-		if (bestFValue == -1.0f || newF < bestFValue) {
+		if (newF <= bestFValue) {
 			bestFValue = newF;
 			bestNode = node;
 		}
@@ -153,45 +157,46 @@ NCL::Maths::Vector2 Pathing::getDirection(float sourceXPos, float sourceYPos, fl
 	startNode->updateHeuristic(endX, endY);
 	endNode->updateHeuristic(endX, endY);
 
+	std::cout << "Node: " << startNode->x << "," << startNode->y << "[g=" << startNode->g << "][h=" << startNode->h << "]" << std::endl;
+
 	openList.push_back(startNode);
 
 	while (!openList.empty()) {
 		MapNode* bestNode = getBestNode(&openList);
+		std::cout << "Best Node: " << bestNode->x << "," << bestNode->y << "[g=" << bestNode->g << "][h=" << bestNode->h << "]" << std::endl;
 
 		if (bestNode == endNode) {
 			std::cout << "Best route found!" << std::endl;
 			break;
-		} else {
-			for (MapNode* node : getNeighbouringNodes(startX, startY, endX, endY)) {
-				std::cout << "Node: " << node->x << "," << node->y << std::endl;
-				
-				if (std::find(openList.begin(), openList.end(), node) == openList.end()) {
-					node->bestParent = bestNode;
-					openList.push_back(node);
-					continue;
-				}
+		}
 
-				float tentativeGScore = bestNode->cost + node->cost;
-				float currentGScore = node->cost;
+		for (MapNode* node : getNeighbouringNodes(bestNode->x, bestNode->y, endX, endY)) {
+			std::cout << "Node: " << node->x << "," << node->y << "[g=" << node->g << "][h=" << node->h << "]" << std::endl;
 
-
-				std::cout << "       " << tentativeGScore + node->h << " < " << currentGScore + bestNode->h << "?" << std::endl;
-				if (tentativeGScore + node->h < currentGScore + bestNode->h) {
-					continue;
-				}
-
+			// If not in openlist
+			if (std::find(openList.begin(), openList.end(), node) == openList.end()) {
 				node->bestParent = bestNode;
-				node->cost = tentativeGScore;
+				node->g = bestNode->g + (std::max)(node->cost, bestNode->cost);
+				openList.push_back(node);
+				continue;
 			}
 
-			removeFromOpenList(&openList, bestNode);
-			addToClosedList(&closedList, bestNode);
+			std::cout << "   if " << node->f() << ">=" << bestNode->f() << "?" << std::endl;
+			if (node->f() >= bestNode->f()) {
+				continue;
+			}
+
+			node->bestParent = bestNode;
+			node->g = bestNode->g + node->cost;
 		}
+
+		removeFromOpenList(&openList, bestNode);
+		addToClosedList(&closedList, bestNode);
 	}
 
 	MapNode* nextTile = getTargetTile(endNode);
 	if (nextTile == nullptr) {
-		return NCL::Maths::Vector2();
+		return NCL::Maths::Vector2(2, 2);
 	}
 
 	return NCL::Maths::Vector2(nextTile->x * TILE_WIDTH, nextTile->y * TILE_WIDTH);

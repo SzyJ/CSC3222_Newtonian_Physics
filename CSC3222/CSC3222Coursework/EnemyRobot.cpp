@@ -13,6 +13,9 @@ EnemyRobot::EnemyRobot() : Robot()	{
 	moving = false;
 
 	SetCollider(new CollisionVolume(Shape::Circle, 16.0f, &position, COLLISION_X_OFFSET, COLLISION_Y_OFFSET));
+
+	state = EnemyRobotState::thinking;
+	speed = 16.0f;
 }
 
 EnemyRobot::~EnemyRobot()	{
@@ -40,41 +43,69 @@ bool EnemyRobot::UpdateObject(float dt) {
 
 		thinkTime += 0.5f;
 
-		float testSpeed = 16;
-
+		float distFromPlayerAprox = abs(playerPosition->x - position.x) + abs(playerPosition->y - position.y);
+		if (distFromPlayerAprox > 150.0f) {
+			patrollingState();
+		} else {
+			followingState();
+		}
 		
-		Vector2 direction = path.getDirection(position.x, position.y, playerPosition->x, playerPosition->y);
-		direction -= position;
-		direction.normalize();
-		velocity = direction * testSpeed;
+	}
 
-		/*
+	return true;
+}
+
+void EnemyRobot::followingState() {
+	Vector2 direction = path.getDirection(position.x + collider->getXOffset(), position.y + collider->getYOffset(), playerPosition->x + collider->getXOffset(), playerPosition->y + collider->getYOffset());
+	path.resetMapInstance();
+	direction.x -= collider->getXOffset();
+	direction.y -= collider->getYOffset();
+
+	direction -= position;
+	direction.normalize();
+
+	moving = true;
+	if (abs(direction.x) > abs(direction.y)) {
+		if (direction.x > 0) {
+			currentAnimDir = MovementDir::Right;
+		} else {
+			currentAnimDir = MovementDir::Left;
+		}
+	} else {
+		if (abs(direction.y) > 0) {
+			currentAnimDir = MovementDir::Down;
+		} else {
+			currentAnimDir = MovementDir::Up;
+		}
+	}
+
+	velocity = direction * speed;
+}
+
+void EnemyRobot::patrollingState() {
+
 		int choice = rand() % 5;
-
 		if (choice == 1) {
 			moving = true;
-			velocity.x = -testSpeed;
+			velocity.x = -speed;
 			currentAnimDir = MovementDir::Left;
 		}
 
 		if (choice == 2) {
 			moving = true;
-			velocity.x = testSpeed;
+			velocity.x = speed;
 			currentAnimDir = MovementDir::Right;
 		}
 
 		if (choice == 3) {
 			moving = true;
-			velocity.y = -testSpeed;
+			velocity.y = -speed;
 			currentAnimDir = MovementDir::Up;
 		}
 
 		if (choice == 4) {
 			moving = true;
-			velocity.y = testSpeed;
+			velocity.y = speed;
 			currentAnimDir = MovementDir::Down;
-		}*/
-	}
-
-	return true;
+		}
 }

@@ -22,11 +22,11 @@ private:
 	void addAvaliableNodes(std::vector<MapNode*>* openList, int tileX, int tileY, int destX, int destY);
 	std::vector<MapNode*> getNeighbouringNodes(int tileX, int tileY, int destX, int destY);
 
-	static void addToClosedList(std::vector<MapNode*>* closedList, MapNode* node);
-	static void removeFromOpenList(std::vector<MapNode*>* openList, MapNode* node);
-	static void addIfPossible(std::vector<MapNode*>* openList, MapNode* node, int destX, int destY);
-	static MapNode* getBestNode(std::vector<MapNode*>* openList);
-	static MapNode* getTargetTile(MapNode* endNode);
+	void addToClosedList(std::vector<MapNode*>* closedList, MapNode* node);
+	void removeFromOpenList(std::vector<MapNode*>* openList, MapNode* node);
+	void addIfPossible(std::vector<MapNode*>* openList, MapNode* node, int destX, int destY);
+	MapNode* getBestNode(std::vector<MapNode*>* openList);
+	MapNode* getTargetTile(MapNode* endNode);
 
 	void resetMap();
 

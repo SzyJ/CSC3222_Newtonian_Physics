@@ -4,8 +4,12 @@
 
 namespace NCL {
 	namespace CSC3222 {
+		enum EnemyRobotState {
+			thinking,
+			following,
+			patrolling
+		};
 		class EnemyRobot : public Robot {
-
 		public:
 			EnemyRobot();
 			~EnemyRobot();
@@ -15,11 +19,20 @@ namespace NCL {
 			void setPlayerPosition(Vector2* playerPos);
 
 		protected:
+			EnemyRobotState state;
+
+			void followingState();
+			void patrollingState();
+
 			float	thinkTime;
 			bool	moving;
 
+			float speed;
+
 			Pathing path;
 			Vector2* playerPosition;
+
+			int followedNodes;
 		};
 	}
 }

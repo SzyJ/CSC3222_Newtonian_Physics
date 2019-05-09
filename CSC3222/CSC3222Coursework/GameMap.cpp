@@ -72,13 +72,13 @@ GameMap::GameMap(const std::string& filename, std::vector<RigidBody*>& objects, 
 			nodeArray[tileIndex].isClosed = false;
 
 			if (type == FLAT_TILE) {
-				nodeArray[tileIndex].cost = 1.0f;
+				nodeArray[tileIndex].cost = 0.5f;
 			} else if (type == ROUGH_TILE) {
-				nodeArray[tileIndex].cost = 1.1f;
+				nodeArray[tileIndex].cost = 0.65f;
 			} else if (type == WALL_TILE) {
 				WallTile* test = new WallTile(x * TILE_WIDTH, y * TILE_WIDTH);
 			    objects.emplace_back(test);
-				nodeArray[tileIndex].cost = 10.0f;
+				nodeArray[tileIndex].g = 10.0f;
 				nodeArray[tileIndex].isTraversable = false;
 				nodeArray[tileIndex].isClosed = true;
 			}

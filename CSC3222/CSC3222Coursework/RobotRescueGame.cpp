@@ -83,7 +83,7 @@ void RobotRescueGame::InitialiseGame() {
 
 	Vector2* playerPos = testRobot->getPlayerPositionVector();
 
-	for (int i = 0; i < 1; ++i) {
+	for (int i = 0; i < 4; ++i) {
 		float randomX = 32.0f + (rand() % 416);
 		float randomY = 32.0f + (rand() % 256);
 		AddEnemyRobot(Vector2(randomX, randomY), path, playerPos);

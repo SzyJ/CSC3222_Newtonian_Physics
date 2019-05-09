@@ -82,7 +82,6 @@ void GameSimsPhysics::CollisionDetection(float dt) {
 				handleCollision(body1, body2, collider);
 			}
 		}
-
 	}
 }
 
@@ -108,12 +107,17 @@ void GameSimsPhysics::handleCollision(RigidBody* body1, RigidBody* body2, const 
 	
 	NCL::Maths::Vector2 body1Velocity = body1->GetVelocity();
 	NCL::Maths::Vector2 body2Velocity = body2->GetVelocity();
+
 	float body1VelDotProduct = body1Velocity.dot(normal);
 	float body2VelDotProduct = body2Velocity.dot(normal);
+	
+	std::cout << "vel1 dot norml: " << body1VelDotProduct << std::endl;
+	std::cout << "vel2 dot norml: " << body2VelDotProduct << std::endl;
+
 	NCL::Maths::Vector2 body1ReflectedVelocity = body1Velocity - (normal * (2.0f * body1VelDotProduct));
 	NCL::Maths::Vector2 body2ReflectedVelocity = body2Velocity - (normal * (2.0f * body2VelDotProduct));
 	body1->SetVelocity(body1ReflectedVelocity * body1E);
-	body2->SetVelocity(body2ReflectedVelocity * body1E);
+	body2->SetVelocity(body2ReflectedVelocity * body2E);
 
 
 

@@ -5,7 +5,7 @@
 
 struct MapNode {
 	MapNode()
-		: bestParent(nullptr), cost(1.0f), h(std::numeric_limits<float>::infinity()), isTraversable(true), isClosed(false)
+		: bestParent(nullptr), g(0.0f), h(9999), isTraversable(true), isClosed(false)
 	{}
 
 	MapNode* bestParent;
@@ -14,29 +14,14 @@ struct MapNode {
 	int y;
 
 	float cost;
+	float g;
 	float h;
 
 	bool isTraversable;
 	bool isClosed;
 
-	float getCumulativeCost() {
-		if (bestParent == nullptr) {
-			return cost;
-		}
-
-		return cost + bestParent->getCumulativeCost();
-	}
-
 	float f() {
-		if (h = std::numeric_limits<float>::infinity()) {
-			return h;
-		}
-
-		if (bestParent == nullptr) {
-			return cost + h;
-		}
-
-		float f = getCumulativeCost() + h;
+		return g + h;
 	}
 
 	void updateHeuristic(int destX, int destY) {
