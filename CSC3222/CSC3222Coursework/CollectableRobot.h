@@ -21,10 +21,8 @@ namespace NCL {
 			bool UpdateObject(float dt) override;
 			void OnCollision(RigidBody* otherBody) override;
 
-
-			void setNextFollow(Vector2* nextFollow);
+			void setPlayerPos(Vector2* nextFollow);
 			void updateNextFollow();
-
 
 		protected:
 			RobotType type;
@@ -35,11 +33,14 @@ namespace NCL {
 			const float DAMPENING_CONSTANT = 5.0f;
 			const float SPRING_AXIS_VELOCITY = 1.0f;
 
-			static Vector2* nextFollow;
-			Vector2* following = nullptr;
+			Vector2* playerPos;
+			static CollectableRobot* nextFollow;
+			CollectableRobot* following = nullptr;
 
 			bool	collected;
 			Vector2 spawnPoint;
+
+			void depositAllRobots();
 		};
 	}
 }

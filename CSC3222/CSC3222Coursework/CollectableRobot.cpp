@@ -5,12 +5,14 @@
 #include "../../Common/Vector4.h"
 #include "CollisionVolume.h"
 #include "PlayerRobot.h"
+#include "BuildingLocations.h"
+
 
 using namespace NCL;
 using namespace CSC3222;
 using namespace Rendering;
 
-Vector2* CollectableRobot::nextFollow;
+CollectableRobot* CollectableRobot::nextFollow;
 
 Vector4 spriteDetails[5] = {
 	Vector4(40 ,174,16, 18),
@@ -57,16 +59,27 @@ void CollectableRobot::DrawObject(GameSimsRenderer &r) {
 
 bool CollectableRobot::UpdateObject(float dt) {
 	if (collected) {
-		float force = (SNAPPINESS * FOLLOW_DISTANCE) - (DAMPENING_CONSTANT * SPRING_AXIS_VELOCITY);
-
-		Vector2 direction = *following - position;
+		Vector2 direction;
+		if (following == nullptr) {
+			direction = *playerPos - position;
+		} else {
+			direction = following->position - position;
+		}
 		direction.normalize();
 
+		float force = (SNAPPINESS * FOLLOW_DISTANCE) - (DAMPENING_CONSTANT * SPRING_AXIS_VELOCITY);
 		velocity = direction * force;
-	}
-	else {
+	} else {
 		//they should just sit still
 	}
+
+
+	if (playerPos->x > HOME_LEFT && playerPos->x < HOME_RIGHT &&
+		playerPos->y > HOME_UP   && playerPos->y < HOME_DOWN) {
+		depositAllRobots();
+	}
+
+
 	return true;
 }
 
@@ -76,7 +89,6 @@ void CollectableRobot::OnCollision(RigidBody* otherBody) {
 	}
 	
 	if (typeid(*otherBody).name() == typeid(PlayerRobot).name()) {
-		std::cout << "Player!!! YEEET" << std::endl;
 		collected = true;
 		following = nextFollow;
 		updateNextFollow();
@@ -84,9 +96,13 @@ void CollectableRobot::OnCollision(RigidBody* otherBody) {
 }
 
 void CollectableRobot::updateNextFollow() {
-	nextFollow = &position;
+	nextFollow = this;
 }
 
-void CollectableRobot::setNextFollow(Vector2* nextFollow) {
-	this->nextFollow = nextFollow;
+void CollectableRobot::setPlayerPos(Vector2* playerPos) {
+	this->playerPos = playerPos;
+}
+
+void CollectableRobot::depositAllRobots() {
+	// TODO
 }

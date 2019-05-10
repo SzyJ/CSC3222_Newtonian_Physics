@@ -83,3 +83,7 @@ bool PlayerRobot::UpdateObject(float dt) {
 
 	return true;
 }
+
+void PlayerRobot::OnCollision(RigidBody* otherBody) {
+
+}

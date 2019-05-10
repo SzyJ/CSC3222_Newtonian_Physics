@@ -119,7 +119,7 @@ void RobotRescueGame::AddCollectableRobot(const Vector2& position, Vector2* play
 	CollectableRobot* robot = new CollectableRobot();
 
 	robot->SetPosition(position);
-	robot->setNextFollow(playerPos);
+	robot->setPlayerPos(playerPos);
 
 	AddNewObject(robot);
 }

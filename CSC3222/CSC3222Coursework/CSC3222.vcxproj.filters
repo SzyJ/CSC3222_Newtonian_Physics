@@ -128,5 +128,8 @@
     <ClInclude Include="CollisionResolution.h">
       <Filter>Physics</Filter>
     </ClInclude>
+    <ClInclude Include="BuildingLocations.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

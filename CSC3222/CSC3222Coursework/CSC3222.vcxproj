@@ -161,6 +161,7 @@
     <ClCompile Include="TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BuildingLocations.h" />
     <ClInclude Include="CollectableRobot.h" />
     <ClInclude Include="CollisionResolution.h" />
     <ClInclude Include="CollisionVolume.h" />
