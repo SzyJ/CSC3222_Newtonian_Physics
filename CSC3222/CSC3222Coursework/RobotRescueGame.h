@@ -29,7 +29,7 @@ namespace NCL {
 			void InitialiseGame();
 
 			void AddEnemyRobot(const Maths::Vector2& position, Pathing path, Maths::Vector2* playerPos);
-			void AddCollectableRobot(const Maths::Vector2& position);
+			void AddCollectableRobot(const Maths::Vector2& position, Maths::Vector2* playerPos);
 
 			TextureManager*		texManager;
 			GameSimsRenderer*	renderer;

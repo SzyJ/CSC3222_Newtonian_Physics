@@ -4,10 +4,13 @@
 #include "../../Common/TextureLoader.h"
 #include "../../Common/Vector4.h"
 #include "CollisionVolume.h"
+#include "PlayerRobot.h"
 
 using namespace NCL;
 using namespace CSC3222;
 using namespace Rendering;
+
+Vector2* CollectableRobot::nextFollow;
 
 Vector4 spriteDetails[5] = {
 	Vector4(40 ,174,16, 18),
@@ -54,10 +57,36 @@ void CollectableRobot::DrawObject(GameSimsRenderer &r) {
 
 bool CollectableRobot::UpdateObject(float dt) {
 	if (collected) {
-		//they should follow the player!
+		float force = (SNAPPINESS * FOLLOW_DISTANCE) - (DAMPENING_CONSTANT * SPRING_AXIS_VELOCITY);
+
+		Vector2 direction = *following - position;
+		direction.normalize();
+
+		velocity = direction * force;
 	}
 	else {
 		//they should just sit still
 	}
 	return true;
+}
+
+void CollectableRobot::OnCollision(RigidBody* otherBody) {
+	if (collected) {
+		return;
+	}
+	
+	if (typeid(*otherBody).name() == typeid(PlayerRobot).name()) {
+		std::cout << "Player!!! YEEET" << std::endl;
+		collected = true;
+		following = nextFollow;
+		updateNextFollow();
+	}
+}
+
+void CollectableRobot::updateNextFollow() {
+	nextFollow = &position;
+}
+
+void CollectableRobot::setNextFollow(Vector2* nextFollow) {
+	this->nextFollow = nextFollow;
 }

@@ -15,7 +15,7 @@ EnemyRobot::EnemyRobot() : Robot()	{
 	SetCollider(new CollisionVolume(Shape::Circle, 16.0f, &position, COLLISION_X_OFFSET, COLLISION_Y_OFFSET));
 
 	state = EnemyRobotState::thinking;
-	speed = 16.0f;
+	speed = 32.0f;
 }
 
 EnemyRobot::~EnemyRobot()	{
@@ -33,7 +33,6 @@ void EnemyRobot::setPlayerPosition(Vector2* playerPos) {
 bool EnemyRobot::UpdateObject(float dt) {
 	thinkTime -= dt;
 	if (moving) {
-		position += velocity * dt;
 		UpdateAnimFrame(dt);
 	}
 

@@ -25,7 +25,7 @@ Vector2* PlayerRobot::getPlayerPositionVector() {
 	return &position;
 }
 bool PlayerRobot::UpdateObject(float dt) {
-	float testSpeed = 64;
+	float testSpeed = 128;
 
 	// Calculate Direction
 	Vector2 newVelocity;

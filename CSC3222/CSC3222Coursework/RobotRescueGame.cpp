@@ -92,7 +92,7 @@ void RobotRescueGame::InitialiseGame() {
 	for (int i = 0; i < 20; ++i) {
 		float randomX = 32.0f + (rand() % 416);
 		float randomY = 32.0f + (rand() % 256);
-		AddCollectableRobot(Vector2(randomX, randomY));
+		AddCollectableRobot(Vector2(randomX, randomY), playerPos);
 	}
 
 	gameTime		= 0;
@@ -115,10 +115,11 @@ void RobotRescueGame::AddEnemyRobot(const Vector2& position, Pathing path, Vecto
 	AddNewObject(robot);
 }
 
-void RobotRescueGame::AddCollectableRobot(const Vector2& position) {
+void RobotRescueGame::AddCollectableRobot(const Vector2& position, Vector2* playerPos) {
 	CollectableRobot* robot = new CollectableRobot();
 
 	robot->SetPosition(position);
+	robot->setNextFollow(playerPos);
 
 	AddNewObject(robot);
 }
