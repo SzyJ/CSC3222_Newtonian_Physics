@@ -4,6 +4,13 @@
 
 namespace NCL {
 	namespace CSC3222 {
+		enum statusEffects {
+			blue,
+			red,
+			green,
+			pink
+		};
+
 		class PlayerRobot : public Robot	{
 		public:
 			PlayerRobot();
@@ -12,11 +19,21 @@ namespace NCL {
 			bool UpdateObject(float dt) override;
 			Vector2* getPlayerPositionVector();
 
+			void applyBlueStatus();
+			void applyRedStatus();
+			void applyGreenStatus();
+			void applyPinkStatus();
 
 		protected:
+			bool blueStatus = false;
+			bool redStatus = false;
+			bool greenStatus = false;
+			bool pinkStatus = false;
+
+
 			void OnCollision(RigidBody* otherBody) override;
 
-			CollectableRobot* lastRobot = nullptr;
+			void depositAllRobots(bool applyStatus);
 		};
 	}
 }

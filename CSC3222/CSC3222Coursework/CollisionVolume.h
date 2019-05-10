@@ -15,6 +15,11 @@ namespace NCL {
 			const float width;
 			const NCL::Maths::Vector2* position;
 
+			bool isPlayer = false;
+			bool isBullet = false;
+			int* bounceCount = nullptr;
+
+
 			void* onCollision;
 
 			const float X_OFFSET;
@@ -43,7 +48,7 @@ namespace NCL {
 
 		public:
 			CollisionVolume(Shape shape, float width, NCL::Maths::Vector2* pos, float xOffset = 0, float yOffset = 0);
-			~CollisionVolume();
+			virtual ~CollisionVolume();
 
 			bool collidesWithSimple(const CollisionVolume* other);
 			CollisionResolution collidesWith(const CollisionVolume* other);
@@ -53,6 +58,15 @@ namespace NCL {
 			const NCL::Maths::Vector2* getPosition() const;
 			const float getXOffset() const;
 			const float getYOffset() const;
+
+			void defineBullet(int* bounceCount) {
+				isBullet = true;
+				this->bounceCount = bounceCount;
+			}
+
+			void definePlayer() {
+				isPlayer = true;
+			}
 		};
 	}
 }

@@ -25,6 +25,10 @@ namespace NCL {
 
 			void AddNewObject(SimObject* object);
 
+			void updateScore(int amount) {
+				currentScore += amount;
+			}
+
 		protected:
 			void InitialiseGame();
 

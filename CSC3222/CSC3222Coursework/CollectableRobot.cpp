@@ -5,8 +5,6 @@
 #include "../../Common/Vector4.h"
 #include "CollisionVolume.h"
 #include "PlayerRobot.h"
-#include "BuildingLocations.h"
-
 
 using namespace NCL;
 using namespace CSC3222;
@@ -35,6 +33,7 @@ CollectableRobot::CollectableRobot() : SimObject()	{
 		texture = texManager->GetTexture("Gum Bot Sprites.png");
 	}
 
+	markedForDeletion = false;
 	SetCollider(new CollisionVolume(Shape::Circle, 16.0f, &position, 0, 2));
 }
 
@@ -58,6 +57,10 @@ void CollectableRobot::DrawObject(GameSimsRenderer &r) {
 }
 
 bool CollectableRobot::UpdateObject(float dt) {
+	if (markedForDeletion) {
+		return false;
+	}
+
 	if (collected) {
 		Vector2 direction;
 		if (following == nullptr) {
@@ -72,13 +75,6 @@ bool CollectableRobot::UpdateObject(float dt) {
 	} else {
 		//they should just sit still
 	}
-
-
-	if (playerPos->x > HOME_LEFT && playerPos->x < HOME_RIGHT &&
-		playerPos->y > HOME_UP   && playerPos->y < HOME_DOWN) {
-		depositAllRobots();
-	}
-
 
 	return true;
 }
@@ -103,6 +99,26 @@ void CollectableRobot::setPlayerPos(Vector2* playerPos) {
 	this->playerPos = playerPos;
 }
 
-void CollectableRobot::depositAllRobots() {
-	// TODO
+CollectableRobot* CollectableRobot::getNextFollow() {
+	return nextFollow;
+}
+
+void CollectableRobot::markForDeletion() {
+	markedForDeletion = true;
+}
+
+CollectableRobot* CollectableRobot::getFollowing() {
+	return following;
+}
+
+RobotType CollectableRobot::getRobotType() {
+	return type;
+}
+
+void CollectableRobot::resetNextFollow() {
+	nextFollow = nullptr;
+}
+
+bool CollectableRobot::isMarkedForDeletion() {
+	return markedForDeletion;
 }

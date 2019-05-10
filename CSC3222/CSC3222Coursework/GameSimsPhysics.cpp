@@ -30,23 +30,27 @@ void GameSimsPhysics::AddRigidBody(RigidBody* b) {
 }
 
 void GameSimsPhysics::RemoveRigidBody(RigidBody* b) {
-	if (b->isStatic()) {
+
+	std::cout << "deleted object" << std::endl;
+	//if (b->isStatic()) {
+		std::cout << "static" << std::endl;
         auto at = std::find(staticBodies.begin(), staticBodies.end(), b);
 
         if (at != staticBodies.end()) {
             //maybe delete too?
-            // delete b; ??
+             //delete b; ??
             staticBodies.erase(at);
         }
-	} else {
-        auto at = std::find(dynamicBodies.begin(), dynamicBodies.end(), b);
+	//} else {
+		std::cout << "dynamic" << std::endl;
+        auto atDyn = std::find(dynamicBodies.begin(), dynamicBodies.end(), b);
 
-        if (at != dynamicBodies.end()) {
+        if (atDyn != dynamicBodies.end()) {
             //maybe delete too?
             // delete b; ??
-            dynamicBodies.erase(at);
+            dynamicBodies.erase(atDyn);
         }
-	}
+	//}
 }
 
 void GameSimsPhysics::Integration(float dt) {

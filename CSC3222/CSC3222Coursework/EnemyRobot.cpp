@@ -2,6 +2,7 @@
 #include "TextureManager.h"
 #include "../../Common/TextureLoader.h"
 #include "CollisionVolume.h"
+#include "Laser.h"
 
 using namespace NCL;
 using namespace CSC3222;
@@ -14,7 +15,7 @@ EnemyRobot::EnemyRobot() : Robot()	{
 
 	SetCollider(new CollisionVolume(Shape::Circle, 16.0f, &position, COLLISION_X_OFFSET, COLLISION_Y_OFFSET));
 
-	state = EnemyRobotState::thinking;
+	state = EnemyRobotState::patrolling;
 	speed = 32.0f;
 }
 
@@ -42,13 +43,34 @@ bool EnemyRobot::UpdateObject(float dt) {
 
 		thinkTime += 0.5f;
 
-		float distFromPlayerAprox = abs(playerPosition->x - position.x) + abs(playerPosition->y - position.y);
-		if (distFromPlayerAprox > 150.0f) {
-			patrollingState();
-		} else {
-			followingState();
+		if (state == EnemyRobotState::stunned) {
+			stunnedTime += dt;
+			std::cout << "STUNNED for: " << stunnedTime << std::endl;
+			
+			moving = false;
+			if (stunnedTime > STUN_TIME) {
+				stunnedTime = 0;
+				state = EnemyRobotState::patrolling;
+			}
+			return true;
 		}
-		
+
+		float distFromPlayerAprox = abs(playerPosition->x - position.x) + abs(playerPosition->y - position.y);
+		if (state == EnemyRobotState::patrolling) {
+			if (distFromPlayerAprox < 100.0f) {
+				state = EnemyRobotState::following;
+			} else {
+				patrollingState();
+			}
+		}
+
+		if (state == EnemyRobotState::following) {
+			if (distFromPlayerAprox > 150.0f) {
+				state = EnemyRobotState::patrolling;
+			} else {
+				followingState();
+			}
+		}
 	}
 
 	return true;
@@ -107,4 +129,10 @@ void EnemyRobot::patrollingState() {
 			velocity.y = speed;
 			currentAnimDir = MovementDir::Down;
 		}
+}
+
+void EnemyRobot::OnCollision(RigidBody* otherBody) {
+	if (typeid(*otherBody).name() == typeid(Laser).name()) {
+		state = EnemyRobotState::stunned;
+	}
 }

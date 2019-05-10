@@ -46,9 +46,9 @@ void RobotRescueGame::Update(float dt) {
 	for (auto i = gameObjects.begin(); i != gameObjects.end(); ) {
 		if (!(*i)->UpdateObject(dt)) { //object has said its finished with
 			delete (*i);
-			gameObjects.erase(i);
-		}
-		else {
+			physics->RemoveRigidBody(*i);
+			i = gameObjects.erase(i);
+		} else {
 			(*i)->DrawObject(*renderer);
 			++i;
 		}

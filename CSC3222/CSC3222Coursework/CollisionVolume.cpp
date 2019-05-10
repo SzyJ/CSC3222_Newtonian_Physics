@@ -14,6 +14,7 @@ CollisionVolume::CollisionVolume(Shape shape, float width, NCL::Maths::Vector2* 
 
 CollisionVolume::~CollisionVolume()
 {
+	std::cout << "Destructor called" << std::endl;
 }
 
 bool CollisionVolume::squareCircleCollision(const CollisionVolume& square, const CollisionVolume& circle) {
@@ -201,6 +202,19 @@ bool CollisionVolume::collidesWithSimple(const CollisionVolume* other) {
 }
 
 CollisionResolution CollisionVolume::collidesWith(const CollisionVolume* other) {
+	if (other == nullptr) {
+		std::cout << "Ignoring nullptr" << std::endl;
+		return CollisionResolution::noCollision();
+	}
+
+	if (this->isBullet && other->isPlayer && *(this->bounceCount) < 1) {
+		return CollisionResolution::noCollision();
+	}
+
+	if (other->isBullet && this->isPlayer && *(other->bounceCount) < 1) {
+		return CollisionResolution::noCollision();
+	}
+
 	Shape otherShape = other->getShape();
 
 	if (shape == Shape::Square && otherShape == Shape::Square) {

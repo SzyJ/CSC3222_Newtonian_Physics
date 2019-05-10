@@ -13,6 +13,7 @@ SimObject::SimObject()	{
 }
 
 SimObject::~SimObject()	{
+	std::cout << "simobj destructor" << std::endl;
 	delete collider;
 }
 

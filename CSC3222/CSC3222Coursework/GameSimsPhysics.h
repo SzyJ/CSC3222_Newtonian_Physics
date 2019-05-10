@@ -18,9 +18,7 @@ namespace NCL {
 				:r(r) {}
 			~GameSimsPhysics();
 
-			// Temp Debug code
 			void Update(float dt);
-			//void Update(float dt);
 
 			void AddRigidBody(RigidBody* b);
 			void RemoveRigidBody(RigidBody* b);

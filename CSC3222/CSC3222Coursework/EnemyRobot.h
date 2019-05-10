@@ -5,7 +5,7 @@
 namespace NCL {
 	namespace CSC3222 {
 		enum EnemyRobotState {
-			thinking,
+			stunned,
 			following,
 			patrolling
 		};
@@ -21,6 +21,7 @@ namespace NCL {
 		protected:
 			EnemyRobotState state;
 
+			void OnCollision(RigidBody* otherBody) override;
 			void followingState();
 			void patrollingState();
 
@@ -33,6 +34,9 @@ namespace NCL {
 			Vector2* playerPosition;
 
 			int followedNodes;
+			float stunnedTime = 0.0f;
+
+			const float STUN_TIME = 0.07f;
 		};
 	}
 }

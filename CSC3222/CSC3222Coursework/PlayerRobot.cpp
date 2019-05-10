@@ -4,6 +4,7 @@
 #include "RobotRescueGame.h"
 #include "../../Common/Window.h"
 #include "CollisionVolume.h"
+#include "BuildingLocations.h"
 
 using namespace NCL;
 using namespace CSC3222;
@@ -15,6 +16,8 @@ PlayerRobot::PlayerRobot() : Robot()	{
 	position = Vector2(32, 32);
 	inverseMass = 1.0f / 5.0f;
 	SetCollider(new CollisionVolume(Shape::Circle, 16.0f, &position, COLLISION_X_OFFSET, COLLISION_Y_OFFSET));
+
+	GetCollider()->definePlayer();
 }
 
 PlayerRobot::~PlayerRobot()	{
@@ -81,9 +84,62 @@ bool PlayerRobot::UpdateObject(float dt) {
 		game->AddNewObject(shot);
 	}
 
+	if (position.x > HOME_LEFT && position.x < HOME_RIGHT &&
+		position.y > HOME_UP   && position.y < HOME_DOWN) {
+		depositAllRobots(true);
+	}
+
 	return true;
 }
 
-void PlayerRobot::OnCollision(RigidBody* otherBody) {
+void PlayerRobot::applyBlueStatus() {
+	blueStatus = true;
+}
 
+void PlayerRobot::applyRedStatus() {
+	redStatus = true;
+}
+
+void PlayerRobot::applyGreenStatus() {
+	greenStatus = true;
+}
+
+void PlayerRobot::applyPinkStatus() {
+	pinkStatus = true;
+}
+
+
+void PlayerRobot::OnCollision(RigidBody* otherBody) {
+	if (typeid(*otherBody).name() == typeid(Laser).name()) {
+		depositAllRobots(false);
+		blueStatus = false;
+		redStatus = false;
+		greenStatus = false;
+		pinkStatus = false;
+	}
+}
+
+void PlayerRobot::depositAllRobots(bool applyStatus) {
+	CollectableRobot* nextFollow = CollectableRobot::getNextFollow();
+	if (nextFollow == nullptr) {
+		return;
+	}
+
+	for (CollectableRobot* bot = nextFollow; bot != nullptr; bot = bot->getFollowing()) {
+		bot->markForDeletion();
+		std::cout << "Add Score (100)!!" << std::endl;
+		if (applyStatus) {
+			if (bot->getRobotType()== RobotType::Freeze) {
+				applyBlueStatus();
+			} else if (bot->getRobotType() == RobotType::Speed) {
+				applyRedStatus();
+			} else if (bot->getRobotType() == RobotType::Score) {
+				applyGreenStatus();
+			} else if (bot->getRobotType() == RobotType::Armour) {
+				applyPinkStatus();
+			}
+		}
+
+		CollectableRobot::resetNextFollow();
+	}
 }

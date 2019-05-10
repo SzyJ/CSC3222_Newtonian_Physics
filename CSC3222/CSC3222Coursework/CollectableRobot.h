@@ -24,6 +24,13 @@ namespace NCL {
 			void setPlayerPos(Vector2* nextFollow);
 			void updateNextFollow();
 
+			static CollectableRobot* getNextFollow();
+			CollectableRobot* getFollowing();
+			void markForDeletion();
+			bool isMarkedForDeletion();
+			RobotType getRobotType();
+			static void resetNextFollow();
+
 		protected:
 			RobotType type;
 
@@ -39,8 +46,7 @@ namespace NCL {
 
 			bool	collected;
 			Vector2 spawnPoint;
-
-			void depositAllRobots();
+			bool markedForDeletion;
 		};
 	}
 }

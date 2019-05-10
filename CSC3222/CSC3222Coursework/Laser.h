@@ -10,15 +10,26 @@ namespace NCL {
 			const float FIRE_FORCE = 0.0f;
 			const float MASS = 0.003f;
 			 
+			const int BOUNCE_THREASHOLD = 5;
 
 			float test = 0.0f;
+			
+
+		protected:
+			void OnCollision(RigidBody* otherBody) override;
+
+
 
 		public:
 			Laser(Vector2& direction);
 			~Laser();
 
+			int bounceCount = 0;
+
 			void DrawObject(GameSimsRenderer &r) override;
 			bool UpdateObject(float dt) override;
+
+			int getBounceCount();
 		};
 	}
 }

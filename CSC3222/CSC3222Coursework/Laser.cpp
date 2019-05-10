@@ -35,6 +35,7 @@ Vector4 frames[16] = {
 
 Laser::Laser(Vector2& direction)
     : SimObject() {
+	makeDynamic();
 	texture = texManager->GetTexture("bullet.png");
 
     Vector2 normalizedDir = direction.getNormalized();
@@ -45,10 +46,12 @@ Laser::Laser(Vector2& direction)
 	FIRE_DIR = normalizedDir;
 
 	SetCollider(new CollisionVolume(Shape::Circle, 8.0f, &position));
+	bounceCount = 0;
+	GetCollider()->defineBullet(&bounceCount);
 }
 
 Laser::~Laser()	{
-
+	
 }
 
 void Laser::DrawObject(GameSimsRenderer &r) {
@@ -74,6 +77,17 @@ void Laser::DrawObject(GameSimsRenderer &r) {
 }
 
 bool Laser::UpdateObject(float dt) {
+	if (bounceCount > BOUNCE_THREASHOLD) {
+		return false;
+	}
 
 	return true;
+}
+
+void Laser::OnCollision(RigidBody* otherBody) {
+	++bounceCount;
+}
+
+int Laser::getBounceCount() {
+	return bounceCount;
 }
