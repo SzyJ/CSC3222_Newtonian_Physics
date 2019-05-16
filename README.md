@@ -16,5 +16,5 @@ This project was done as part of the 3rd year Games Simulations module.
 - [X] A* pathing algorithm.
 - [X] State machine for decisions (Very simple AI).
 - [X] Spring Calculations.
-- [X] Simple game mechanics (Player can collect robots, stun enemies and deposit collectable tobots at base) 
+- [X] Simple game mechanics (Player can collect robots, stun enemies and deposit collectable robots at base) 
 - [ ] Flocking Algorithm.
