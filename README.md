@@ -2,6 +2,7 @@
 
 Implementation of physics and collision detection calculations.
 
+![Game_Screenshot](Images/Screenshot.PNG)
 
 The logic has been implemented over a skeleton project called "Robot Rescue".
 The base skeleton for the project was provided by Newcastle University.
