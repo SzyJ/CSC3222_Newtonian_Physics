@@ -67,18 +67,18 @@ namespace NCL {
 
 			static Matrix2 Rotation(float degrees);
 
-			//Handy string output for the matrix. Can get a bit messy, but better than nothing!
-			inline friend std::ostream& operator<<(std::ostream& o, const Matrix2& m);
+
 
 			float	values[4];
 		};
-
+			//Handy string output for the matrix. Can get a bit messy, but better than nothing!
+			  std::ostream& operator<<(std::ostream& o, const Matrix2& m);
 		//Handy string output for the matrix. Can get a bit messy, but better than nothing!
-		inline std::ostream& operator<<(std::ostream& o, const Matrix2& m) {
-			o << "Mat2(";
-			o << "\t" << m.values[0] << "," << m.values[2] << std::endl;
-			o << "\t\t" << m.values[1] << "," << m.values[3] << std::endl;
-			return o;
-		}
+		//inline std::ostream& operator<<(std::ostream& o, const Matrix2& m) {
+		//	o << "Mat2(";
+		//	o << "\t" << m.values[0] << "," << m.values[2] << std::endl;
+		//	o << "\t\t" << m.values[1] << "," << m.values[3] << std::endl;
+		//	return o;
+		//}
 	}
 }

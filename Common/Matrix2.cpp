@@ -4,6 +4,11 @@
 using namespace NCL;
 using namespace NCL::Maths;
 
+////Handy string output for the matrix. Can get a bit messy, but better than nothing!
+// std::ostream& operator<<(std::ostream& o, const Matrix2& m) {
+//
+//}
+//
 Matrix2::Matrix2(void)	{
 	values[0] = 1.0f;
 	values[1] = 0.0f;
@@ -41,4 +46,12 @@ Matrix2 Matrix2::Rotation(float degrees)	{
 	mat.values[3] = c;
 
 	return mat;
+}
+
+std::ostream & NCL::Maths::operator<<(std::ostream & o, const Matrix2 & m)
+{
+    o << "Mat2(";
+    o << "\t" << m.values[0] << "," << m.values[2] << std::endl;
+    o << "\t\t" << m.values[1] << "," << m.values[3] << std::endl;
+    return o;
 }

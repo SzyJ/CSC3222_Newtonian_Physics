@@ -2,7 +2,7 @@
 #include "RobotRescueGame.h"
 
 #include "../../Common/Vector3.h"
-
+#include "../../Common/Matrix2.h"
 using namespace NCL;
 using namespace CSC3222;
 
@@ -14,6 +14,10 @@ int main() {
 	}
 
 	RobotRescueGame* robotGame = new RobotRescueGame();
+
+    Maths::Matrix2* test = new Maths::Matrix2();
+
+    std::cout << *test;
 
 	while (w->UpdateWindow() && !Window::GetKeyboard()->KeyDown(KEYBOARD_ESCAPE)) {
 		float time = w->GetTimer()->GetTimeDelta();
